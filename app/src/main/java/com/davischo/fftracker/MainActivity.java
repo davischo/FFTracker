@@ -152,6 +152,60 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public static class askingGenderFragment extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            ViewGroup rootView = (ViewGroup) inflater.inflate(
+                    R.layout.asking_gender_layout, container, false);
+
+            return rootView;
+        }
+    }
+    public static class askingAgeFragment extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            ViewGroup rootView = (ViewGroup) inflater.inflate(
+                    R.layout.asking_age_layout, container, false);
+
+            return rootView;
+        }
+    }
+    public static class askingHeightFragment extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            ViewGroup rootView = (ViewGroup) inflater.inflate(
+                    R.layout.asking_height_layout, container, false);
+
+            return rootView;
+        }
+    }
+    public static class askingActivityLevelFragment extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            ViewGroup rootView = (ViewGroup) inflater.inflate(
+                    R.layout.asking_activity_level_layout, container, false);
+
+            return rootView;
+        }
+    }
+    public static class askingGoalFragment extends Fragment {
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            ViewGroup rootView = (ViewGroup) inflater.inflate(
+                    R.layout.asking_goal_layout, container, false);
+
+            return rootView;
+        }
+    }
+
+
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
