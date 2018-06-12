@@ -1,5 +1,6 @@
 package com.davischo.fftracker;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -37,8 +39,15 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    //static Boolean first_time = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(getIntent().getBooleanExtra("first_time", true)) {
+            startActivity(new Intent(MainActivity.this, First_Run_Activity.class));
+            Toast.makeText(MainActivity.this, "First Run", Toast.LENGTH_LONG)
+                    .show();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -151,60 +160,6 @@ public class MainActivity extends AppCompatActivity {
             return rootView;
         }
     }
-
-    public static class askingGenderFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            ViewGroup rootView = (ViewGroup) inflater.inflate(
-                    R.layout.asking_gender_layout, container, false);
-
-            return rootView;
-        }
-    }
-    public static class askingAgeFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            ViewGroup rootView = (ViewGroup) inflater.inflate(
-                    R.layout.asking_age_layout, container, false);
-
-            return rootView;
-        }
-    }
-    public static class askingHeightFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            ViewGroup rootView = (ViewGroup) inflater.inflate(
-                    R.layout.asking_height_layout, container, false);
-
-            return rootView;
-        }
-    }
-    public static class askingActivityLevelFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            ViewGroup rootView = (ViewGroup) inflater.inflate(
-                    R.layout.asking_activity_level_layout, container, false);
-
-            return rootView;
-        }
-    }
-    public static class askingGoalFragment extends Fragment {
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            ViewGroup rootView = (ViewGroup) inflater.inflate(
-                    R.layout.asking_goal_layout, container, false);
-
-            return rootView;
-        }
-    }
-
-
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

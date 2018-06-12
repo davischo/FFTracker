@@ -25,5 +25,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/completeButton"
         android:layout_below="@+id/goalSpinner"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:onClick="onCompleteButtonClicked"/>
 </RelativeLayout>

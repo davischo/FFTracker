@@ -44,12 +44,6 @@
         android:layout_marginStart="13dp"
         android:id="@+id/textView5"
         android:textSize="18sp"/>
-    <Button
-        android:text="Next"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/nextButton"
-        android:layout_below="@+id/genderSwitch"
-        android:layout_marginTop="20dp"/>
+
 
 </RelativeLayout>
