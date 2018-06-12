@@ -1,5 +1,6 @@
 package com.davischo.fftracker;
 
+import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 
@@ -16,7 +17,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.davischo.fftracker.R.layout.fragment_ff;
 
@@ -118,18 +126,38 @@ public class MainActivity extends AppCompatActivity {
 
     public static class FFFragment extends Fragment{
         ListView foods;
+        PieChart calChart;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(fragment_ff, container, false);
             foods = rootView.findViewById(R.id.foods);
+
+            //Populate List with dummy data
             ArrayList<String> sample = new ArrayList<String>();
             for(int i = 0; i < 20; i++){
                 sample.add("Item " + i);
             }
             ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, sample);
             foods.setAdapter(arrayAdapter);
+
+            calChart = rootView.findViewById(R.id.calChart);
+            List<PieEntry> entries = new ArrayList<PieEntry>();
+            entries.add(new PieEntry(1000, "Exercised"));
+            entries.add(new PieEntry(1000, "Eaten"));
+            entries.add(new PieEntry(2000, "Remaining"));
+
+            PieDataSet set = new PieDataSet(entries, "Calorie Breakdown");
+            set.setColors(new int[]{Color.BLUE, Color.RED, Color.GREEN});
+            PieData data = new PieData(set);
+            calChart.setData(data);
+            calChart.setEntryLabelColor(Color.BLACK);
+            calChart.getLegend().setEnabled(false);
+            calChart.setDescription(null);
+            calChart.setCenterText("Calorie Breakdown");
+            calChart.invalidate(); // refresh
+
             return rootView;
         }
     }
