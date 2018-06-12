@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
@@ -9,21 +9,31 @@
         android:id="@+id/ageQuestionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="How old are you?"
+        android:text="What is your age?"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textAlignment="center"
         android:layout_marginTop="50dp"
         android:textSize="40sp" />
 
-    <EditText
-        android:id="@+id/ageAnswerEditText"
-        android:layout_width="match_parent"
+    <NumberPicker
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:textAlignment="center"
-        android:layout_marginTop="20dp"
-        android:hint="age" />
+        android:id="@+id/agePicker"
+        android:layout_below="@id/ageQuestionTextView"
+        android:layout_centerHorizontal="true"
+        >
+    </NumberPicker>
+
+    <TextView
+        android:text="years old"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView6"
+        android:layout_alignBaseline="@+id/agePicker"
+        android:layout_alignBottom="@+id/agePicker"
+        android:layout_toRightOf="@+id/agePicker"
+        android:layout_toEndOf="@+id/agePicker"
+        android:layout_marginBottom="80dp"/>
 
 
-</LinearLayout>
+</RelativeLayout>

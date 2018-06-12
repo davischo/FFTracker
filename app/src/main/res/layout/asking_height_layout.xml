@@ -1,26 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/heightQuestionTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="How tall are you?"
+        android:text="What is your height?"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textAlignment="center"
         android:layout_marginTop="50dp"
         android:textSize="40sp" />
 
-    <EditText
-        android:id="@+id/heightAnswerEditText"
-        android:layout_width="match_parent"
+    <NumberPicker
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:textAlignment="center"
-        android:layout_marginTop="20dp"
-        android:hint="height" />
+        android:id="@+id/heightPicker"
+        android:layout_below="@id/heightQuestionTextView"
+        android:layout_centerHorizontal="true"
+        >
+    </NumberPicker>
+
+    <TextView
+        android:text="CM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView6"
+        android:layout_alignBaseline="@+id/heightPicker"
+        android:layout_alignBottom="@+id/heightPicker"
+        android:layout_toRightOf="@+id/heightPicker"
+        android:layout_toEndOf="@+id/heightPicker"
+        android:layout_marginBottom="80dp"/>
 
 
-</LinearLayout>
+</RelativeLayout>

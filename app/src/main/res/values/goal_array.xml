@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="goal_array">
+        <item>maintain current weight</item>
+        <item>lose 1 lb per week</item>
+        <item>lose 1.5 lb per week</item>
+        <item>lose 2 lb per week</item>
+    </string-array>
+</resources>
