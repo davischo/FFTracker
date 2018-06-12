@@ -26,6 +26,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 import static java.lang.Integer.parseInt;
 
 
@@ -56,14 +58,39 @@ public class First_Run_Activity extends FragmentActivity {
         static SharedPreferences sharedPreferences;
         static SharedPreferences.Editor editor;
 
+        public int getAge(int dobYear, int dobMonth, int dobDay) {
+            Calendar c = Calendar.getInstance();
+            int currYear = c.get(Calendar.YEAR);
+            int currMonth = c.get(Calendar.MONTH);
+            int currDay = c.get(Calendar.DAY_OF_MONTH);
+
+            int age = currYear - dobYear;
+            if(currMonth < dobMonth || (currMonth == dobMonth) && (currDay < dobDay)) {
+                age--;
+            }
+            if(age < 0) {
+                age = 0;
+            }
+            return age;
+        }
+
         public void onCompleteButtonClicked(View view) {
+            //calculate user age based on birth date:
+            int dobYear = sharedPreferences.getInt("dobYear", 1980);
+            int dobMonth = sharedPreferences.getInt("dobMonth", 1);
+            int dobDay = sharedPreferences.getInt("dobDay", 1);
+            int age = getAge(dobYear, dobMonth, dobDay);
+            editor.putInt("age", age).commit();
             //push data stored in sharedpreference onto database:
 
             //switch to main activity
             Intent intent = new Intent(First_Run_Activity.this, MainActivity.class);
             intent.putExtra("first_time", false);
             Log.i("user data stored: ", sharedPreferences.getString("gender", "male") + ", "
-                    + sharedPreferences.getInt("age", 25) + ", "
+                    + sharedPreferences.getInt("dobYear", 1980) + ", "
+                    + sharedPreferences.getInt("dobMonth", 1) + ", "
+                    + sharedPreferences.getInt("dobDay", 1) + ", "
+                    + sharedPreferences.getInt("age", 0) + ", "
                     + sharedPreferences.getInt("height", 165) + ", "
                     + sharedPreferences.getInt("activity_level", 0) + ", "
                     + sharedPreferences.getInt("goal", 0));
@@ -84,7 +111,9 @@ public class First_Run_Activity extends FragmentActivity {
 
             //save default user data:
             editor.putString("gender", "male");
-            editor.putInt("age", 25);
+            editor.putInt("dobYear", 1980);
+            editor.putInt("dobMonth", 1);
+            editor.putInt("dobMonth", 1);
             editor.putInt("height", 165);
             editor.putInt("activity_level", 0);
             editor.putInt("goal", 0);
