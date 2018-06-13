@@ -11,11 +11,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -138,22 +141,78 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
     public static class FFFragment extends Fragment{
-        ListView foods;
         PieChart calChart;
+        LinearLayout display;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(fragment_ff, container, false);
-            foods = rootView.findViewById(R.id.foods);
 
-            //Populate List with dummy data
-            ArrayList<String> sample = new ArrayList<String>();
-            for(int i = 0; i < 20; i++){
-                sample.add("Item " + i);
+            display = rootView.findViewById(R.id.display);
+
+            TextView title = new TextView(getContext());
+            title.setGravity(Gravity.CENTER);
+            title.setTextColor(Color.BLACK);
+            title.setTextSize(16);
+            title.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            title.setText("Food");
+            display.addView(title);
+            LinearLayout newLin;
+            TextView newText;
+            Button newButton;
+            for(int i = 0; i < 5; i++) {
+                newLin = new LinearLayout(getContext());
+                newText = new TextView(getContext());
+                newButton = new Button(getContext());
+                newLin.setOrientation(LinearLayout.HORIZONTAL);
+                newText.setText("Item " + i);
+                newText.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+                newText.setGravity(Gravity.CENTER);
+                newLin.addView(newText);
+                newButton.setText("Delete");
+                newButton.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.1f));
+                newButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.println("DELETE BUTTON PRESSED");
+                    }
+                });
+                newLin.addView(newButton);
+                display.addView(newLin);
             }
-            ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_list_item_1, sample);
-            foods.setAdapter(arrayAdapter);
+            title = new TextView(getContext());
+            title.setText("Exercise");
+            title.setGravity(Gravity.CENTER);
+            title.setTextColor(Color.BLACK);
+            title.setTextSize(16);
+            title.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            display.addView(title);
+            for(int i = 0; i < 5; i++) {
+                newLin = new LinearLayout(getContext());
+                newText = new TextView(getContext());
+                newButton = new Button(getContext());
+                newLin.setOrientation(LinearLayout.HORIZONTAL);
+                newText.setText("Item " + i);
+                newText.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+                newText.setGravity(Gravity.CENTER);
+                newLin.addView(newText);
+                newButton.setText("Delete");
+                newButton.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.1f));
+                newButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.println("DELETE BUTTON PRESSED");
+                    }
+                });
+                newLin.addView(newButton);
+                display.addView(newLin);
+            }
+
 
             calChart = rootView.findViewById(R.id.calChart);
             List<PieEntry> entries = new ArrayList<PieEntry>();

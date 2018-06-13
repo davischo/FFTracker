@@ -24,20 +24,25 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true" />
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/calChart"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_below="@+id/textView3"
-        android:layout_centerHorizontal="true"
-        android:layout_height="200dp" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView3">
 
-    <ListView
-        android:id="@+id/foods"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/calChart" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/display">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/calChart"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/textView3"
+                android:layout_centerHorizontal="true"
+                android:layout_height="200dp" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
