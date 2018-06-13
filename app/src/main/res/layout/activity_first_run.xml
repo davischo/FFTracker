@@ -21,7 +21,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|bottom"
         android:orientation="horizontal"
-        android:id="@+id/radiogroup">
+        android:id="@+id/radiogroup"
+        android:scaleX="0.7"
+        android:scaleY="0.7">
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
