@@ -81,7 +81,10 @@ public class First_Run_Activity extends FragmentActivity {
             int dobDay = sharedPreferences.getInt("dobDay", 1);
             int age = getAge(dobYear, dobMonth, dobDay);
             editor.putInt("age", age).commit();
-            //push data stored in sharedpreference onto database:
+            //calculate calorie remaining using H-B equation and save it in sharedPref:
+            //int calorie_remaining =
+
+            //push all data stored in sharedpreference onto database:
 
             //switch to main activity
             Intent intent = new Intent(First_Run_Activity.this, MainActivity.class);
@@ -159,30 +162,6 @@ public class First_Run_Activity extends FragmentActivity {
 
                 }
             });
-            //five views for gathering user input
-
-//            EditText ageEditText = findViewById(R.id.ageAnswerEditText);
-//            EditText heightEditText = findViewById(R.id.heightAnswerEditText);
-//            Spinner activitySpinner = findViewById(R.id.activityLevelSpinner);
-//            Spinner goalSpinner = findViewById(R.id.goalSpinner);
-
-
-
-//            activitySpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                    editor.putInt("activity_level", i).commit();
-//                    Toast.makeText(getApplicationContext(), "activity level stored is: "+ sharedPreferences.getInt("activity_level", 0), Toast.LENGTH_SHORT);
-//                }
-//            });
-//
-//            goalSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                @Override
-//                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                    editor.putInt("goal", i).commit();
-//                    Toast.makeText(getApplicationContext(), "goal stored is: "+ sharedPreferences.getInt("goal", 0), Toast.LENGTH_SHORT);
-//                }
-//            });
         }
 
         @Override
