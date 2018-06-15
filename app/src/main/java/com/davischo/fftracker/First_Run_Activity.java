@@ -58,6 +58,16 @@ public class First_Run_Activity extends FragmentActivity {
         static SharedPreferences sharedPreferences;
         static SharedPreferences.Editor editor;
 
+        static int YEAR_DEFAULT = 1980;
+        static int MONTH_DEFAULT = 1;
+        static int DAY_DEFAULT = 1;
+        static String GENDER_DEFAULT = "male";
+        static int HEIGHT_DEFAULT = 165;  //in cm
+        static int WEIGHT_DEFAULT = 65;  //in kg
+        static int ACTIVITY_LEVEL_DEFAULT = 0;
+        static int GOAL_DEFAULT = 0;
+
+
         public int getAge(int dobYear, int dobMonth, int dobDay) {
             Calendar c = Calendar.getInstance();
             int currYear = c.get(Calendar.YEAR);
@@ -76,9 +86,9 @@ public class First_Run_Activity extends FragmentActivity {
 
         public void onCompleteButtonClicked(View view) {
             //calculate user age based on birth date:
-            int dobYear = sharedPreferences.getInt("dobYear", 1980);
-            int dobMonth = sharedPreferences.getInt("dobMonth", 1);
-            int dobDay = sharedPreferences.getInt("dobDay", 1);
+            int dobYear = sharedPreferences.getInt("dobYear", YEAR_DEFAULT);
+            int dobMonth = sharedPreferences.getInt("dobMonth", MONTH_DEFAULT);
+            int dobDay = sharedPreferences.getInt("dobDay", MONTH_DEFAULT);
             int age = getAge(dobYear, dobMonth, dobDay);
             editor.putInt("age", age).commit();
             //calculate calorie remaining using H-B equation and save it in sharedPref:
@@ -90,13 +100,14 @@ public class First_Run_Activity extends FragmentActivity {
             Intent intent = new Intent(First_Run_Activity.this, MainActivity.class);
             intent.putExtra("first_time", false);
             Log.i("user data stored: ", sharedPreferences.getString("gender", "male") + ", "
-                    + sharedPreferences.getInt("dobYear", 1980) + ", "
-                    + sharedPreferences.getInt("dobMonth", 1) + ", "
-                    + sharedPreferences.getInt("dobDay", 1) + ", "
+                    + sharedPreferences.getInt("dobYear", YEAR_DEFAULT) + ", "
+                    + sharedPreferences.getInt("dobMonth", MONTH_DEFAULT) + ", "
+                    + sharedPreferences.getInt("dobDay", DAY_DEFAULT) + ", "
                     + sharedPreferences.getInt("age", 0) + ", "
-                    + sharedPreferences.getInt("height", 165) + ", "
-                    + sharedPreferences.getInt("activity_level", 0) + ", "
-                    + sharedPreferences.getInt("goal", 0));
+                    + sharedPreferences.getInt("height", HEIGHT_DEFAULT) + ", "
+                    + sharedPreferences.getInt("weight", WEIGHT_DEFAULT) + ", "
+                    + sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT) + ", "
+                    + sharedPreferences.getInt("goal", GOAL_DEFAULT));
             startActivity(intent);
         }
 
@@ -113,13 +124,14 @@ public class First_Run_Activity extends FragmentActivity {
             editor = sharedPreferences.edit();
 
             //save default user data:
-            editor.putString("gender", "male");
-            editor.putInt("dobYear", 1980);
-            editor.putInt("dobMonth", 1);
-            editor.putInt("dobMonth", 1);
-            editor.putInt("height", 165);
-            editor.putInt("activity_level", 0);
-            editor.putInt("goal", 0);
+            editor.putString("gender", GENDER_DEFAULT);
+            editor.putInt("dobYear", YEAR_DEFAULT);
+            editor.putInt("dobMonth", MONTH_DEFAULT);
+            editor.putInt("dobMonth", DAY_DEFAULT);
+            editor.putInt("height", HEIGHT_DEFAULT);
+            editor.putInt("weight", WEIGHT_DEFAULT);
+            editor.putInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
+            editor.putInt("goal", GOAL_DEFAULT);
             editor.commit();
 
             radioGroup = (RadioGroup)findViewById(R.id.radiogroup);
@@ -153,6 +165,9 @@ public class First_Run_Activity extends FragmentActivity {
                             break;
                         case 4:
                             radioGroup.check(R.id.radioButton5);
+                            break;
+                        case 5:
+                            radioGroup.check(R.id.radioButton6);
                             break;
                     }
                 }
@@ -196,8 +211,10 @@ public class First_Run_Activity extends FragmentActivity {
                     case 2:
                         return new askingHeightFragment();
                     case 3:
-                        return new askingActivityLevelFragment();
+                        return new askingWeightFragment();
                     case 4:
+                        return new askingActivityLevelFragment();
+                    case 5:
                         return new askingGoalFragment();
                 }
                 return null;

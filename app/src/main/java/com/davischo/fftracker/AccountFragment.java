@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import static com.davischo.fftracker.First_Run_Activity.WEIGHT_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
 
 /**
@@ -26,6 +27,7 @@ public class AccountFragment extends Fragment {
         int dobMonth = sharedPreferences.getInt("dobMonth", 1);
         int dobDay = sharedPreferences.getInt("dobDay", 1);
         int height = sharedPreferences.getInt("height", 165);
+        int weight = sharedPreferences.getInt("weight", WEIGHT_DEFAULT);
         int activity_level = sharedPreferences.getInt("activity_level", 0);
         int goal = sharedPreferences.getInt("goal", 0);
 
@@ -38,6 +40,9 @@ public class AccountFragment extends Fragment {
 
         EditText heightEditText = rootView.findViewById(R.id.heightEditText);
         heightEditText.setText(height + " CM");
+
+        EditText weightEditText = rootView.findViewById(R.id.weightEditText);
+        weightEditText.setText(weight + " KG");
 
         EditText activityLevelEditText = rootView.findViewById(R.id.activityLevelEditText);
         String[] activity_level_strArray = getResources().getStringArray(R.array.activity_level_array);
