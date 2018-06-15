@@ -37,9 +37,9 @@ import static java.lang.Integer.parseInt;
 
 public class First_Run_Activity extends FragmentActivity {
         /**
-         * The number of pages (wizard steps) to show in this demo.
-         */
-        private static final int NUM_PAGES = 5;
+         * The number of pages (wizard steps) to show.
+    */
+        private static final int NUM_PAGES = 6;
 
         /**
          * The pager widget, which handles animation and allows swiping horizontally to access previous

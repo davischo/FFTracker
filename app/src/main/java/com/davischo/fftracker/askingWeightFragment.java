@@ -23,11 +23,12 @@ public class askingWeightFragment extends Fragment {
         NumberPicker weightNumberPicker = (NumberPicker) rootView.findViewById(R.id.weightNumberPicker);
         weightNumberPicker.setMinValue(1);
         weightNumberPicker.setMaxValue(200);
+        weightNumberPicker.setValue(65);
         weightNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                editor.putInt("weight", i).commit();
-                Log.i("weight", String.valueOf(i));
+                editor.putInt("weight", i1).commit();
+                Log.i("weight", String.valueOf(i1));
             }
         });
         return rootView;
