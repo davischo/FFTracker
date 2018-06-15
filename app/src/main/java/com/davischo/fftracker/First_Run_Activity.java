@@ -67,6 +67,9 @@ public class First_Run_Activity extends FragmentActivity {
         static int ACTIVITY_LEVEL_DEFAULT = 0;
         static int GOAL_DEFAULT = 0;
 
+        static double[] activity_level_factors = {1.2, 1.375, 1.55, 1.725};
+        static int[] goal_offsets = {0, -500, -1000, 500, 1000};
+
 
         public int getAge(int dobYear, int dobMonth, int dobDay) {
             Calendar c = Calendar.getInstance();
@@ -92,22 +95,43 @@ public class First_Run_Activity extends FragmentActivity {
             int age = getAge(dobYear, dobMonth, dobDay);
             editor.putInt("age", age).commit();
             //calculate calorie remaining using H-B equation and save it in sharedPref:
-            //int calorie_remaining =
+            /*
+               For men, BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age in years) + 5
+               For women, BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age in years) - 161
+               (Source: wikipedia)
+               activity level:
+                 0 - sedentary: BMR * 1.2
+                 1 - lightly active: BMR * 1.375
+                 2 - moderately active: BMR * 1.55
+                 3 - very active: BMR * 1.725
+               goal:  (in kcal)
+                 0 - maintain weight: +0
+                 1 - lose 0.5kg (1 lb) per week : -500
+                 2 - lose 1 kg (2 lb) per week -1000
+                 3 - gain 0.5 kg (1 lb) per week +500
+                 4 - gain 1 kg(2 lb) per week +1000
+               (Source: http://www.calculator.net/calorie-calculator.html)
+            */
+            String gender = sharedPreferences.getString("gender", "male");
+            int weight = sharedPreferences.getInt("weight", WEIGHT_DEFAULT);
+            int height = sharedPreferences.getInt("height", HEIGHT_DEFAULT);
+            double BMR;
+            if(gender == "male"){
+                BMR = 10 * weight + 6.25 * height - 5 * age + 5;
+            }else {
+                BMR = 10 * weight + 6.25 * height - 5 * age - 161;
+            }
+            int activity_level = sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
+            int goal_level = sharedPreferences.getInt("goal", GOAL_DEFAULT);
+            int orig_cal_remain = (int) Math.round(BMR * activity_level_factors[activity_level] + goal_offsets[goal_level]);
+            editor.putInt("orig_cal_remain", orig_cal_remain).commit();
+            Log.i("cal remain for the user", String.valueOf(orig_cal_remain));
 
             //push all data stored in sharedpreference onto database:
 
             //switch to main activity
             Intent intent = new Intent(First_Run_Activity.this, MainActivity.class);
             intent.putExtra("first_time", false);
-            Log.i("user data stored: ", sharedPreferences.getString("gender", "male") + ", "
-                    + sharedPreferences.getInt("dobYear", YEAR_DEFAULT) + ", "
-                    + sharedPreferences.getInt("dobMonth", MONTH_DEFAULT) + ", "
-                    + sharedPreferences.getInt("dobDay", DAY_DEFAULT) + ", "
-                    + sharedPreferences.getInt("age", 0) + ", "
-                    + sharedPreferences.getInt("height", HEIGHT_DEFAULT) + ", "
-                    + sharedPreferences.getInt("weight", WEIGHT_DEFAULT) + ", "
-                    + sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT) + ", "
-                    + sharedPreferences.getInt("goal", GOAL_DEFAULT));
             startActivity(intent);
         }
 
