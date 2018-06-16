@@ -9,6 +9,14 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Switch;
 
+import static com.davischo.fftracker.First_Run_Activity.ACTIVITY_LEVEL_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.DAY_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.GENDER_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.GOAL_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.HEIGHT_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.MONTH_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.WEIGHT_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.YEAR_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
 
 /**
@@ -21,13 +29,14 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
         //display user stats on my account page
-        String gender = sharedPreferences.getString("gender", "male");
-        int dobYear = sharedPreferences.getInt("dobYear", 1980);
-        int dobMonth = sharedPreferences.getInt("dobMonth", 1);
-        int dobDay = sharedPreferences.getInt("dobDay", 1);
-        int height = sharedPreferences.getInt("height", 165);
-        int activity_level = sharedPreferences.getInt("activity_level", 0);
-        int goal = sharedPreferences.getInt("goal", 0);
+        String gender = sharedPreferences.getString("gender", GENDER_DEFAULT);
+        int dobYear = sharedPreferences.getInt("dobYear", YEAR_DEFAULT);
+        int dobMonth = sharedPreferences.getInt("dobMonth", MONTH_DEFAULT);
+        int dobDay = sharedPreferences.getInt("dobDay", DAY_DEFAULT);
+        int height = sharedPreferences.getInt("height", HEIGHT_DEFAULT);
+        int weight = sharedPreferences.getInt("weight", WEIGHT_DEFAULT);
+        int activity_level = sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
+        int goal = sharedPreferences.getInt("goal", GOAL_DEFAULT);
 
         Switch genderSwitch = rootView.findViewById(R.id.genderSwitch);
         if(gender == "male") genderSwitch.setChecked(false);
@@ -38,6 +47,9 @@ public class AccountFragment extends Fragment {
 
         EditText heightEditText = rootView.findViewById(R.id.heightEditText);
         heightEditText.setText(height + " CM");
+
+        EditText weightEditText = rootView.findViewById(R.id.weightEditText);
+        weightEditText.setText(weight + " KG");
 
         EditText activityLevelEditText = rootView.findViewById(R.id.activityLevelEditText);
         String[] activity_level_strArray = getResources().getStringArray(R.array.activity_level_array);

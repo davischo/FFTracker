@@ -2,11 +2,9 @@
 <resources>
     <string-array name="goal_array">
         <item>maintain current weight</item>
-        <item>lose 1 lb per week</item>
-        <item>lose 1.5 lb per week</item>
-        <item>lose 2 lb per week</item>
-        <item>gain 1 lb per week</item>
-        <item>gain 1.5 lb per week</item>
-        <item>gain 2 lb per week</item>
+        <item>lose 0.5 kg(1 lb) per week</item>
+        <item>lose 1 kg(2 lb) per week</item>
+        <item>gain 0.5 kg(1 lb) per week</item>
+        <item>gain 1 kg(2 lb) per week</item>
     </string-array>
 </resources>
