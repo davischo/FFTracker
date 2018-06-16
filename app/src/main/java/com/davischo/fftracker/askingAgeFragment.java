@@ -9,6 +9,9 @@ import android.widget.DatePicker;
 
 import java.util.Calendar;
 
+import static com.davischo.fftracker.First_Run_Activity.DAY_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.MONTH_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.YEAR_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.editor;
 
 /**
@@ -22,7 +25,7 @@ public class askingAgeFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.asking_age_layout, container, false);
         DatePicker birthDatePicker = rootView.findViewById(R.id.birthDatePicker);
-        birthDatePicker.init(1980, 0, 1, new DatePicker.OnDateChangedListener(){
+        birthDatePicker.init(YEAR_DEFAULT, MONTH_DEFAULT - 1, DAY_DEFAULT, new DatePicker.OnDateChangedListener(){
             @Override
             public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
                 editor.putInt("dobYear", year);

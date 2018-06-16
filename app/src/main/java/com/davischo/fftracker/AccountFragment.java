@@ -2,7 +2,10 @@ package com.davischo.fftracker;
 
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,9 @@ import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
  */
 
 public class AccountFragment extends Fragment {
+
+    FragmentManager fm = getFragmentManager();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
@@ -38,6 +44,7 @@ public class AccountFragment extends Fragment {
         int activity_level = sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
         int goal = sharedPreferences.getInt("goal", GOAL_DEFAULT);
 
+        /*display user stats*/
         Switch genderSwitch = rootView.findViewById(R.id.genderSwitch);
         if(gender == "male") genderSwitch.setChecked(false);
         else genderSwitch.setChecked(true);
@@ -58,6 +65,16 @@ public class AccountFragment extends Fragment {
         EditText goalEditText = rootView.findViewById(R.id.goalEditText);
         String[] goal_strArray = getResources().getStringArray(R.array.goal_array);
         goalEditText.setText(goal_strArray[goal]);
+
+        /*edit user stats*/
+        birthdayEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment birthDatePickerDialogFragment = new birthDatePickerFragment();
+                birthDatePickerDialogFragment.show(getFragmentManager(), "birthDatePickerDialogFragment");
+            }
+        });
+
 
         return rootView;
     }
