@@ -20,9 +20,6 @@ android {
 }
 
 dependencies {
-    //Added MPAndroidChart here
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -30,4 +27,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
     compile 'com.android.support:design:26.0.0-alpha1'
     testCompile 'junit:junit:4.12'
+
+    //Added MPAndroidChart here
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
