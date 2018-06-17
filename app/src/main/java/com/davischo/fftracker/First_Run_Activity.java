@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import static com.davischo.fftracker.FFTrackerHelper.getAge;
 import static java.lang.Integer.parseInt;
 
 
@@ -67,25 +68,8 @@ public class First_Run_Activity extends FragmentActivity {
         static int ACTIVITY_LEVEL_DEFAULT = 0;
         static int GOAL_DEFAULT = 0;
 
-        static double[] activity_level_factors = {1.2, 1.375, 1.55, 1.725};
-        static int[] goal_offsets = {0, -500, -1000, 500, 1000};
 
 
-        public int getAge(int dobYear, int dobMonth, int dobDay) {
-            Calendar c = Calendar.getInstance();
-            int currYear = c.get(Calendar.YEAR);
-            int currMonth = c.get(Calendar.MONTH);
-            int currDay = c.get(Calendar.DAY_OF_MONTH);
-
-            int age = currYear - dobYear;
-            if(currMonth < dobMonth || (currMonth == dobMonth) && (currDay < dobDay)) {
-                age--;
-            }
-            if(age < 0) {
-                age = 0;
-            }
-            return age;
-        }
 
         public void onCompleteButtonClicked(View view) {
             //calculate user age based on birth date:
@@ -94,36 +78,13 @@ public class First_Run_Activity extends FragmentActivity {
             int dobDay = sharedPreferences.getInt("dobDay", MONTH_DEFAULT);
             int age = getAge(dobYear, dobMonth, dobDay);
             editor.putInt("age", age).commit();
-            //calculate calorie remaining using H-B equation and save it in sharedPref:
-            /*
-               For men, BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age in years) + 5
-               For women, BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age in years) - 161
-               (Source: wikipedia)
-               activity level:
-                 0 - sedentary: BMR * 1.2
-                 1 - lightly active: BMR * 1.375
-                 2 - moderately active: BMR * 1.55
-                 3 - very active: BMR * 1.725
-               goal:  (in kcal)
-                 0 - maintain weight: +0
-                 1 - lose 0.5kg (1 lb) per week : -500
-                 2 - lose 1 kg (2 lb) per week -1000
-                 3 - gain 0.5 kg (1 lb) per week +500
-                 4 - gain 1 kg(2 lb) per week +1000
-               (Source: http://www.calculator.net/calorie-calculator.html)
-            */
+
             String gender = sharedPreferences.getString("gender", "male");
             int weight = sharedPreferences.getInt("weight", WEIGHT_DEFAULT);
             int height = sharedPreferences.getInt("height", HEIGHT_DEFAULT);
-            double BMR;
-            if(gender == "male"){
-                BMR = 10 * weight + 6.25 * height - 5 * age + 5;
-            }else {
-                BMR = 10 * weight + 6.25 * height - 5 * age - 161;
-            }
             int activity_level = sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
             int goal_level = sharedPreferences.getInt("goal", GOAL_DEFAULT);
-            int orig_cal_remain = (int) Math.round(BMR * activity_level_factors[activity_level] + goal_offsets[goal_level]);
+            int orig_cal_remain = FFTrackerHelper.calculateCalRemain(gender, age, height, weight, activity_level, goal_level);
             editor.putInt("orig_cal_remain", orig_cal_remain).commit();
             Log.i("cal remain for the user", String.valueOf(orig_cal_remain));
 
@@ -151,7 +112,7 @@ public class First_Run_Activity extends FragmentActivity {
             editor.putString("gender", GENDER_DEFAULT);
             editor.putInt("dobYear", YEAR_DEFAULT);
             editor.putInt("dobMonth", MONTH_DEFAULT);
-            editor.putInt("dobMonth", DAY_DEFAULT);
+            editor.putInt("dobDay", DAY_DEFAULT);
             editor.putInt("height", HEIGHT_DEFAULT);
             editor.putInt("weight", WEIGHT_DEFAULT);
             editor.putInt("activity_level", ACTIVITY_LEVEL_DEFAULT);

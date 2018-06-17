@@ -2,6 +2,7 @@ package com.davischo.fftracker;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.app.Fragment;
@@ -10,7 +11,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import static com.davischo.fftracker.First_Run_Activity.DAY_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.MONTH_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.YEAR_DEFAULT;
+import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
 
