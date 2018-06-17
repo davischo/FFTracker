@@ -11,6 +11,7 @@ import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -78,7 +79,11 @@ public class TrendFragment extends Fragment {
         display.getLegend().setEnabled(false);
         display.setData(lineData);
         display.setDescription(null);
-        display.setBackgroundColor(Color.CYAN);
+        display.setBackgroundColor(Color.LTGRAY);
+        display.setBorderColor(Color.CYAN);
+        //display.setDrawValues();
+        //display.setMaxVisibleValueCount(5);
+        //xAxis.setLabelCount(7);
         display.invalidate();
 
         return rootView;
