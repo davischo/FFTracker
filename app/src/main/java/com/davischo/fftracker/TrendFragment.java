@@ -46,6 +46,7 @@ public class TrendFragment extends Fragment {
         ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, times);
         timeSpan.setAdapter(arrayAdapter);
         timeSpan.setSelection(0);
+
         List<String> categories = new ArrayList<String>();
         categories.add("Weight");
         categories.add("Calories Burned");
@@ -81,9 +82,6 @@ public class TrendFragment extends Fragment {
         display.setDescription(null);
         display.setBackgroundColor(Color.LTGRAY);
         display.setBorderColor(Color.CYAN);
-        //display.setDrawValues();
-        //display.setMaxVisibleValueCount(5);
-        //xAxis.setLabelCount(7);
         display.invalidate();
 
         return rootView;
