@@ -2,12 +2,6 @@ package com.davischo.fftracker;
 
 import java.util.Calendar;
 
-import static com.davischo.fftracker.First_Run_Activity.ACTIVITY_LEVEL_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.DAY_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.GOAL_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.HEIGHT_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.MONTH_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.YEAR_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
 
 /**

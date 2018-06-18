@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Switch;
 
 import static com.davischo.fftracker.First_Run_Activity.ACTIVITY_LEVEL_DEFAULT;
@@ -72,6 +73,14 @@ public class AccountFragment extends Fragment {
             public void onClick(View view) {
                 DialogFragment birthDatePickerDialogFragment = new birthDatePickerFragment();
                 birthDatePickerDialogFragment.show(getFragmentManager(), "birthDatePickerDialogFragment");
+            }
+        });
+
+        heightEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HeightPickerFragment newFragment = new HeightPickerFragment();
+                newFragment.show(getFragmentManager(), "height picker");
             }
         });
 
