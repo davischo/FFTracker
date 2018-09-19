@@ -20,8 +20,8 @@ public class askingHeightFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(
                 R.layout.asking_height_layout, container, false);
         NumberPicker heightPicker = rootView.findViewById(R.id.heightPicker);
-        heightPicker.setMinValue(140);
-        heightPicker.setMaxValue(199);
+        heightPicker.setMinValue(130);
+        heightPicker.setMaxValue(250);
         heightPicker.setValue(165);
         heightPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
