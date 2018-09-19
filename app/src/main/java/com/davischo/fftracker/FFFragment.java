@@ -2,14 +2,17 @@ package com.davischo.fftracker;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -28,6 +31,13 @@ import static com.davischo.fftracker.R.layout.fragment_ff;
 public class FFFragment extends Fragment{
     PieChart calChart;
     LinearLayout display;
+    FloatingActionButton add;
+    LinearLayout add_menu;
+    EditText add_weight;
+    EditText add_exercised;
+    EditText add_eaten;
+    Button add_submit;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,6 +56,8 @@ public class FFFragment extends Fragment{
         LinearLayout newLin;
         TextView newText;
         Button newButton;
+
+        //Populate Food List
         for(int i = 0; i < 5; i++) {
             newLin = new LinearLayout(getContext());
             newText = new TextView(getContext());
@@ -68,6 +80,7 @@ public class FFFragment extends Fragment{
             newLin.addView(newButton);
             display.addView(newLin);
         }
+        //Populate Exercise List
         title = new TextView(getContext());
         title.setText("Exercise");
         title.setGravity(Gravity.CENTER);
@@ -98,7 +111,7 @@ public class FFFragment extends Fragment{
             display.addView(newLin);
         }
 
-
+        //Populate Pie Chart
         calChart = rootView.findViewById(R.id.calChart);
         List<PieEntry> entries = new ArrayList<PieEntry>();
         entries.add(new PieEntry(1000, "Exercised"));
@@ -115,6 +128,58 @@ public class FFFragment extends Fragment{
         calChart.setCenterText("Calorie Breakdown");
         calChart.invalidate(); // refresh
 
+        //Add Menu Display
+        add = rootView.findViewById(R.id.add_button);
+        add_weight = rootView.findViewById(R.id.add_weight);
+        add_exercised = rootView.findViewById(R.id.add_exercised);
+        add_eaten = rootView.findViewById(R.id.add_eaten);
+        add_menu = rootView.findViewById(R.id.add_menu);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("PLUS BUTTON PRESSED");
+                if(add_menu.getVisibility()==View.VISIBLE) {
+                    add_menu.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    add_menu.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        //Adding New Data
+        add_submit = rootView.findViewById(R.id.add_submit);
+        add_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(add_weight.getText().toString().equals("") && add_exercised.getText().toString().equals("")
+                        && add_eaten.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "Please Input at Least One Value", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Updated!", Toast.LENGTH_SHORT).show();
+                }
+                if(!add_weight.getText().toString().equals("")){
+                    String rounded = String.format("%.1f", Float.valueOf(add_weight.getText().toString()));
+                    System.out.println("WEIGHT ENTERED IS:" + rounded);
+                    //STORE DATA HERE
+                    add_weight.setText("");
+                }
+                if(!add_exercised.getText().toString().equals("")){
+                    System.out.println("EXERCISE ENTERED IS:" + Integer.valueOf(add_exercised.getText().toString()));
+                    //STORE DATA HERE
+                    add_exercised.setText("");
+                }
+                if(!add_eaten.getText().toString().equals("")) {
+                    System.out.println("FOOD ENTERED IS:" + Integer.valueOf(add_eaten.getText().toString()));
+                    //STORE DATA HERE
+                    add_eaten.setText("");
+                }
+            }
+        });
+
         return rootView;
     }
+
+
 }
