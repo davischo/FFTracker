@@ -2,35 +2,20 @@ package com.davischo.fftracker;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.NumberPicker;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.Switch;
-import android.widget.Toast;
-
-import java.util.Calendar;
 
 import static com.davischo.fftracker.FFTrackerHelper.getAge;
-import static java.lang.Integer.parseInt;
-
 
 //public class First_Run_Activity extends AppCompatActivity {
 
@@ -89,6 +74,19 @@ public class First_Run_Activity extends FragmentActivity {
             Log.i("cal remain for the user", String.valueOf(orig_cal_remain));
 
             //push all data stored in sharedpreference onto database:
+            try {
+                SQLiteDatabase db = openOrCreateDatabase("dataPoints", MODE_PRIVATE, null);
+                long currTime = System.currentTimeMillis();
+                db.execSQL("INSERT INTO weight (time, weight) VALUES (" + currTime + "," + weight + ")");
+//                Cursor c = db.rawQuery("SELECT * FROM weight", null);
+//                c.moveToFirst();
+//                int timeIndex = c.getColumnIndex("time");
+//                int weightIndex = c.getColumnIndex("weight");
+//                System.out.println(c.getString(timeIndex) + " AND " + c.getInt(weightIndex));
+            }
+            catch(Exception e){
+                System.out.println("Something went wrong storing in first run!");
+            }
 
             //switch to main activity
             Intent intent = new Intent(First_Run_Activity.this, MainActivity.class);
@@ -118,6 +116,8 @@ public class First_Run_Activity extends FragmentActivity {
             editor.putInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
             editor.putInt("goal", GOAL_DEFAULT);
             editor.commit();
+
+            System.out.println("SET DEFAULTS");
 
             radioGroup = (RadioGroup)findViewById(R.id.radiogroup);
             completeButton = (Button) findViewById(R.id.completeButton);

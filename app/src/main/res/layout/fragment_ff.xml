@@ -36,55 +36,98 @@
         android:elevation="20dp"
         android:background="@android:color/darker_gray">
 
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:layout_above="@+id/add_eaten"
-            android:layout_centerHorizontal="true"
-            android:elevation="10dp"
-            android:id="@+id/add_exercised"
-            android:hint="Calories Exercised"
-            />
+            android:layout_height="match_parent">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:layout_above="@+id/add_weight"
-            android:layout_centerHorizontal="true"
-            android:elevation="10dp"
-            android:id="@+id/add_eaten"
-            android:hint="Calories Eaten"/>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/exercise_name"
+                android:hint="Exercise"
+                android:layout_weight="1" />
 
-        <EditText
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:layout_above="@+id/add_eaten"
+                android:layout_centerHorizontal="true"
+                android:elevation="10dp"
+                android:id="@+id/add_exercised"
+                android:hint="Calories Exercised"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:ems="10"
-            android:layout_above="@+id/add_button"
-            android:layout_centerHorizontal="true"
-            android:elevation="10dp"
-            android:id="@+id/add_weight"
-            android:hint="Current Weight in Pounds"
-            />
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/food_name"
+                android:hint="Food"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:layout_above="@+id/add_weight"
+                android:layout_centerHorizontal="true"
+                android:elevation="10dp"
+                android:id="@+id/add_eaten"
+                android:hint="Calories Eaten"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:ems="10"
+                android:layout_above="@+id/add_button"
+                android:layout_centerHorizontal="true"
+                android:elevation="10dp"
+                android:id="@+id/add_weight"
+                android:hint="Current Weight in Pounds"
+                android:layout_weight="1"
+                android:gravity="center"/>
+        </LinearLayout>
 
         <Button
             android:text="Submit!"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/add_submit"
-            android:background="@android:color/holo_blue_light" />
+            android:background="@android:color/holo_blue_light"
+            android:onClick="submitClicked" />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/textView3">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -95,7 +138,6 @@
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/calChart"
                 android:layout_width="match_parent"
-                android:layout_below="@+id/textView3"
                 android:layout_centerHorizontal="true"
                 android:layout_height="200dp" />
 

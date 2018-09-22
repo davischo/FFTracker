@@ -5,22 +5,18 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.Switch;
 
 import static com.davischo.fftracker.First_Run_Activity.ACTIVITY_LEVEL_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.DAY_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.GENDER_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.GOAL_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.HEIGHT_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.MONTH_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.WEIGHT_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.YEAR_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
 
 /**
@@ -36,8 +32,9 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
         //display user stats on my account page
-        String gender = sharedPreferences.getString("gender", GENDER_DEFAULT);
-        int dobYear = sharedPreferences.getInt("dobYear", YEAR_DEFAULT);
+        String gender = FFTrackerHelper.getLocalGender(); //sharedPreferences.getString("gender", GENDER_DEFAULT);
+        int dobYear = FFTrackerHelper.getLocalDOBYear(); //sharedPreferences.getInt("dobYear", YEAR_DEFAULT);
+//        System.out.println("CAL REMAINING IS " + FFTrackerHelper.calculateCalRemain());
         int dobMonth = sharedPreferences.getInt("dobMonth", MONTH_DEFAULT);
         int dobDay = sharedPreferences.getInt("dobDay", DAY_DEFAULT);
         int height = sharedPreferences.getInt("height", HEIGHT_DEFAULT);
@@ -84,6 +81,7 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        //TODO weight editing
 
         return rootView;
     }

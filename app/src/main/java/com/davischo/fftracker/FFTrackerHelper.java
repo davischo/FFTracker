@@ -1,6 +1,8 @@
 package com.davischo.fftracker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
 
@@ -21,6 +23,13 @@ public class FFTrackerHelper {
     static int WEIGHT_DEFAULT = 65;  //in kg
     static int ACTIVITY_LEVEL_DEFAULT = 0;
     static int GOAL_DEFAULT = 0;
+
+    public static String getCurrentDate(){
+        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
+        Date date = new Date();
+        return format.format(date);
+    }
+
     //calculate calorie remaining using H-B equation and save it in sharedPref:
             /*
                For men, BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age in years) + 5
@@ -49,6 +58,17 @@ public class FFTrackerHelper {
         int orig_cal_remain = (int) Math.round(BMR * activity_level_factors[activity_level] + goal_offsets[goal_level]);
         return orig_cal_remain;
     }
+    public static int calculateCalRemain() {
+        double BMR;
+        if(getLocalGender() == "male"){
+            BMR = 10 * getLocalWeight() + 6.25 * getLocalHeight() - 5 * getLocalAge() + 5;
+        }else {
+            BMR = 10 * getLocalWeight() + 6.25 * getLocalHeight() - 5 * getLocalAge() - 161;
+        }
+        int orig_cal_remain = (int) Math.round(BMR * activity_level_factors[getLocalActivityLevel()]
+                + goal_offsets[getLocalGoal()]);
+        return orig_cal_remain;
+    }
 
     public static int getAge(int dobYear, int dobMonth, int dobDay) {
         Calendar c = Calendar.getInstance();
@@ -64,6 +84,9 @@ public class FFTrackerHelper {
             age = 0;
         }
         return age;
+    }
+    public static int getLocalAge(){
+        return getAge(getLocalDOBYear(), getLocalDOBMonth(), getLocalDOBDay());
     }
     public static String getLocalGender(){
         return sharedPreferences.getString("gender", GENDER_DEFAULT);
