@@ -49,12 +49,9 @@ public class First_Run_Activity extends FragmentActivity {
         static int DAY_DEFAULT = 1;
         static String GENDER_DEFAULT = "male";
         static int HEIGHT_DEFAULT = 165;  //in cm
-        static int WEIGHT_DEFAULT = 65;  //in kg
+        static float WEIGHT_DEFAULT = 65.0f;  //in kg
         static int ACTIVITY_LEVEL_DEFAULT = 0;
         static int GOAL_DEFAULT = 0;
-
-
-
 
         public void onCompleteButtonClicked(View view) {
             //calculate user age based on birth date:
@@ -65,7 +62,7 @@ public class First_Run_Activity extends FragmentActivity {
             editor.putInt("age", age).commit();
 
             String gender = sharedPreferences.getString("gender", "male");
-            int weight = sharedPreferences.getInt("weight", WEIGHT_DEFAULT);
+            float weight = sharedPreferences.getFloat("weight", WEIGHT_DEFAULT);
             int height = sharedPreferences.getInt("height", HEIGHT_DEFAULT);
             int activity_level = sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
             int goal_level = sharedPreferences.getInt("goal", GOAL_DEFAULT);
@@ -78,11 +75,7 @@ public class First_Run_Activity extends FragmentActivity {
                 SQLiteDatabase db = openOrCreateDatabase("dataPoints", MODE_PRIVATE, null);
                 long currTime = System.currentTimeMillis();
                 db.execSQL("INSERT INTO weight (time, weight) VALUES (" + currTime + "," + weight + ")");
-//                Cursor c = db.rawQuery("SELECT * FROM weight", null);
-//                c.moveToFirst();
-//                int timeIndex = c.getColumnIndex("time");
-//                int weightIndex = c.getColumnIndex("weight");
-//                System.out.println(c.getString(timeIndex) + " AND " + c.getInt(weightIndex));
+                db.close();
             }
             catch(Exception e){
                 System.out.println("Something went wrong storing in first run!");
@@ -112,16 +105,13 @@ public class First_Run_Activity extends FragmentActivity {
             editor.putInt("dobMonth", MONTH_DEFAULT);
             editor.putInt("dobDay", DAY_DEFAULT);
             editor.putInt("height", HEIGHT_DEFAULT);
-            editor.putInt("weight", WEIGHT_DEFAULT);
+            editor.putFloat("weight", WEIGHT_DEFAULT);
             editor.putInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
             editor.putInt("goal", GOAL_DEFAULT);
             editor.commit();
 
-            System.out.println("SET DEFAULTS");
-
             radioGroup = (RadioGroup)findViewById(R.id.radiogroup);
             completeButton = (Button) findViewById(R.id.completeButton);
-
 
             // Instantiate a ViewPager and a PagerAdapter.
             mPager = (ViewPager) findViewById(R.id.user_stats_view_pager);

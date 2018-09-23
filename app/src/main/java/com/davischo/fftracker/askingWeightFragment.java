@@ -22,12 +22,17 @@ public class askingWeightFragment extends Fragment {
                 R.layout.asking_weight_layout, container, false);
         NumberPicker weightNumberPicker = (NumberPicker) rootView.findViewById(R.id.weightNumberPicker);
         weightNumberPicker.setMinValue(1);
-        weightNumberPicker.setMaxValue(200);
-        weightNumberPicker.setValue(65);
+        weightNumberPicker.setMaxValue(2000);
+        weightNumberPicker.setValue(650);
+        String[] displayVals = new String[1990];
+        for(int i = 0; i < 1990; i++){
+            displayVals[i] = new String("" + (double)(i+1)/10);
+        }
+        weightNumberPicker.setDisplayedValues(displayVals);
         weightNumberPicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-                editor.putInt("weight", i1).commit();
+                editor.putFloat("weight", (float)(i1/10.0)).commit();
                 Log.i("weight", String.valueOf(i1));
             }
         });

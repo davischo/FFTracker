@@ -20,35 +20,35 @@ public class FFTrackerHelper {
     static int DAY_DEFAULT = 1;
     static String GENDER_DEFAULT = "male";
     static int HEIGHT_DEFAULT = 165;  //in cm
-    static int WEIGHT_DEFAULT = 65;  //in kg
+    static float WEIGHT_DEFAULT = 65.0f;  //in kg
     static int ACTIVITY_LEVEL_DEFAULT = 0;
     static int GOAL_DEFAULT = 0;
 
     public static String getCurrentDate(){
-        SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return format.format(date);
     }
 
-    //calculate calorie remaining using H-B equation and save it in sharedPref:
-            /*
-               For men, BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age in years) + 5
-               For women, BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age in years) - 161
-               (Source: wikipedia)
-               activity level:
-                 0 - sedentary: BMR * 1.2
-                 1 - lightly active: BMR * 1.375
-                 2 - moderately active: BMR * 1.55
-                 3 - very active: BMR * 1.725
-               goal:  (in kcal)
-                 0 - maintain weight: +0
-                 1 - lose 0.5kg (1 lb) per week : -500
-                 2 - lose 1 kg (2 lb) per week -1000
-                 3 - gain 0.5 kg (1 lb) per week +500
-                 4 - gain 1 kg(2 lb) per week +1000
-               (Source: http://www.calculator.net/calorie-calculator.html)
-            */
-    public static int calculateCalRemain(String gender, int age, int height, int weight, int activity_level, int goal_level) {
+//calculate calorie remaining using H-B equation and save it in sharedPref:
+        /*
+           For men, BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age in years) + 5
+           For women, BMR = (10 × weight in kg) + (6.25 × height in cm) - (5 × age in years) - 161
+           (Source: wikipedia)
+           activity level:
+             0 - sedentary: BMR * 1.2
+             1 - lightly active: BMR * 1.375
+             2 - moderately active: BMR * 1.55
+             3 - very active: BMR * 1.725
+           goal:  (in kcal)
+             0 - maintain weight: +0
+             1 - lose 0.5kg (1 lb) per week : -500
+             2 - lose 1 kg (2 lb) per week -1000
+             3 - gain 0.5 kg (1 lb) per week +500
+             4 - gain 1 kg(2 lb) per week +1000
+           (Source: http://www.calculator.net/calorie-calculator.html)
+        */
+    public static int calculateCalRemain(String gender, int age, int height, float weight, int activity_level, int goal_level) {
         double BMR;
         if(gender == "male"){
             BMR = 10 * weight + 6.25 * height - 5 * age + 5;
@@ -103,8 +103,8 @@ public class FFTrackerHelper {
     public static int getLocalHeight() {
         return sharedPreferences.getInt("height", HEIGHT_DEFAULT);
     }
-    public static int getLocalWeight() {
-        return sharedPreferences.getInt("weight", WEIGHT_DEFAULT);
+    public static float getLocalWeight() {
+        return sharedPreferences.getFloat("weight", WEIGHT_DEFAULT);
     }
     public static int getLocalActivityLevel() {
         return sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT);

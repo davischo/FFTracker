@@ -1,8 +1,6 @@
 package com.davischo.fftracker;
 
-import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +23,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.davischo.fftracker.First_Run_Activity.editor;
+import static com.davischo.fftracker.MainActivity.storage;
 import static com.davischo.fftracker.R.layout.fragment_ff;
 
 /**
@@ -38,41 +38,49 @@ public class FFFragment extends Fragment{
     LinearLayout add_menu;
     static EditText add_weight, add_exercised, add_eaten;
     static EditText food_name, exercise_name;
-    Button add_submit;
-    static SQLiteDatabase db;
 
     public static void submitClicked(View v){
         if(add_weight.getText().toString().equals("") && add_exercised.getText().toString().equals("")
                         && add_eaten.getText().toString().equals("")) {
-                Toast.makeText(v.getContext(), "Please Input at Least One Value", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Please Input at Least One Numeric Value", Toast.LENGTH_SHORT).show();
             }
             else{
                 Toast.makeText(v.getContext(), "Updated!", Toast.LENGTH_SHORT).show();
             }
             if(!add_weight.getText().toString().equals("")){
                 String rounded = String.format("%.1f", Float.valueOf(add_weight.getText().toString()));
-                System.out.println("WEIGHT ENTERED IS:" + rounded);
+                System.out.println("ROUNDED VALUE IS"  + rounded);
+                editor.putFloat("weight", Float.valueOf(rounded)).commit();
                 //STORE DATA HERE
                 add_weight.setText("");
             }
             if(!add_exercised.getText().toString().equals("")){
+                String exerciseName = "Exercise";
+                if(!exercise_name.getText().toString().equals("")){
+                    exerciseName = exercise_name.getText().toString();
+                }
                 System.out.println("EXERCISE ENTERED IS:" + Integer.valueOf(add_exercised.getText().toString()));
-                db.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', '"
-                        + exercise_name.getText().toString()+ "', "
+                storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', '"
+                        + exerciseName + "', "
                         + Integer.valueOf(add_exercised.getText().toString()) + ")");
-                //STORE DATA HERE
+                //STORED DATA HERE
+                exercise_name.setText("");
                 add_exercised.setText("");
             }
             if(!add_eaten.getText().toString().equals("")) {
+                String foodName = "Food";
+                if(!food_name.getText().toString().equals("")){
+                    foodName = food_name.getText().toString();
+                }
                 System.out.println("FOOD ENTERED IS:" + Integer.valueOf(add_eaten.getText().toString()));
-                db.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', '"
-                        + food_name.getText().toString()+ "', "
+                storage.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', '"
+                        + foodName + "', "
                         + Integer.valueOf(add_eaten.getText().toString()) + ")");
-                //STORE DATA HERE
+                //STORED DATA HERE
+                food_name.setText("");
                 add_eaten.setText("");
             }
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,16 +100,14 @@ public class FFFragment extends Fragment{
         LinearLayout newLin;
         TextView newText;
         Button newButton;
+        String currDate = FFTrackerHelper.getCurrentDate();
 
         int foodCal = 0, exerciseCal = 0;
-
-        db = getActivity().openOrCreateDatabase("dataPoints", Context.MODE_PRIVATE, null);
-        //TODO Make it show today's food only
         //Populate food list
-        if(db.rawQuery("SELECT * FROM food WHERE time LIKE '" +
-                FFTrackerHelper.getCurrentDate() + "'", null).getCount()!=0) {
-            Cursor c = db.rawQuery("SELECT * FROM food WHERE time LIKE '" +
-                    FFTrackerHelper.getCurrentDate() + "'", null);
+        if(storage.rawQuery("SELECT * FROM food WHERE time='" +
+                currDate + "'", null).getCount()!=0) {
+            Cursor c = storage.rawQuery("SELECT * FROM food WHERE time='" +
+                    currDate + "'", null);
             int nameIndex = c.getColumnIndex("name");
             int calIndex = c.getColumnIndex("calories");
             c.moveToFirst();
@@ -111,7 +117,7 @@ public class FFFragment extends Fragment{
                 newText = new TextView(getContext());
                 newButton = new Button(getContext());
                 newLin.setOrientation(LinearLayout.HORIZONTAL);
-                newText.setText(c.getString(nameIndex) + " " + c.getString(calIndex) + "cal" );
+                newText.setText(c.getString(nameIndex) + " " + c.getString(calIndex) + " cal" );
                 newText.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 1));
                 newText.setGravity(Gravity.CENTER);
@@ -119,17 +125,16 @@ public class FFFragment extends Fragment{
                 newButton.setText("Delete");
                 newButton.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 3));
-                newButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //TODO actually delete the content
-                        System.out.println("DELETE BUTTON PRESSED");
-                    }
-                });
+                newButton.setOnClickListener(
+                        new FoodListener(
+                                currDate, c.getString(nameIndex), Integer.valueOf(c.getString(calIndex))
+                        )
+                );
                 newLin.addView(newButton);
                 display.addView(newLin);
                 c.moveToNext();
             }
+            c.close();
         }
         else{
             TextView empty = new TextView(getContext());
@@ -147,11 +152,10 @@ public class FFFragment extends Fragment{
         display.addView(title);
 
         //Populate exercise list
-        //TODO make it today's exercise only
-        if(db.rawQuery("SELECT * FROM exercise WHERE time LIKE '" +
-                FFTrackerHelper.getCurrentDate() + "'", null).getCount()!=0) {
-            Cursor c = db.rawQuery("SELECT * FROM exercise WHERE time LIKE '" +
-                    FFTrackerHelper.getCurrentDate() +"'", null);
+        if(storage.rawQuery("SELECT * FROM exercise WHERE time='" +
+                currDate + "'", null).getCount()!=0) {
+            Cursor c = storage.rawQuery("SELECT * FROM exercise WHERE time='" +
+                    currDate +"'", null);
             int nameIndex = c.getColumnIndex("name");
             int calIndex = c.getColumnIndex("calories");
             c.moveToFirst();
@@ -161,7 +165,7 @@ public class FFFragment extends Fragment{
                 newText = new TextView(getContext());
                 newButton = new Button(getContext());
                 newLin.setOrientation(LinearLayout.HORIZONTAL);
-                newText.setText(c.getString(nameIndex) + " " + c.getString(calIndex) + "cal" );
+                newText.setText(c.getString(nameIndex) + " " + c.getString(calIndex) + " cal" );
                 newText.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 1));
                 newText.setGravity(Gravity.CENTER);
@@ -169,17 +173,16 @@ public class FFFragment extends Fragment{
                 newButton.setText("Delete");
                 newButton.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT, 3));
-                newButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //TODO actually delete the content
-                        System.out.println("DELETE BUTTON PRESSED");
-                    }
-                });
+                newButton.setOnClickListener(
+                        new ExerciseListener(
+                                currDate, c.getString(nameIndex), Integer.valueOf(c.getString(calIndex))
+                        )
+                );
                 newLin.addView(newButton);
                 display.addView(newLin);
                 c.moveToNext();
             }
+            c.close();
         }
         else{
             TextView empty = new TextView(getContext());
@@ -240,5 +243,38 @@ public class FFFragment extends Fragment{
         return rootView;
     }
 
+    private class FoodListener implements View.OnClickListener {
+        String date, food;
+        int calories;
+
+        public FoodListener(String date, String food, int calories){
+            this.date = date;
+            this.food = food;
+            this.calories = calories;
+        }
+
+        @Override
+        public void onClick(View view) {
+            //TODO SQL Query here
+            System.out.println("Date, food, cal" + date + food + calories);
+        }
+    }
+
+    private class ExerciseListener implements View.OnClickListener {
+        String date, exercise;
+        int calories;
+
+        public ExerciseListener(String date, String exercise, int calories){
+            this.date = date;
+            this.exercise = exercise;
+            this.calories = calories;
+        }
+
+        @Override
+        public void onClick(View view) {
+            //TODO SQL Query here
+            System.out.println("Date, exercise, cal" + date + exercise + calories);
+        }
+    }
 
 }

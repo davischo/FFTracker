@@ -10,14 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 
-import static com.davischo.fftracker.First_Run_Activity.ACTIVITY_LEVEL_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.DAY_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.GOAL_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.HEIGHT_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.MONTH_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.WEIGHT_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
+import static com.davischo.fftracker.FFTrackerHelper.*;
 
 /**
  * Created by yx on 2018/6/12.
@@ -31,16 +26,16 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
+
         //display user stats on my account page
-        String gender = FFTrackerHelper.getLocalGender(); //sharedPreferences.getString("gender", GENDER_DEFAULT);
-        int dobYear = FFTrackerHelper.getLocalDOBYear(); //sharedPreferences.getInt("dobYear", YEAR_DEFAULT);
-//        System.out.println("CAL REMAINING IS " + FFTrackerHelper.calculateCalRemain());
-        int dobMonth = sharedPreferences.getInt("dobMonth", MONTH_DEFAULT);
-        int dobDay = sharedPreferences.getInt("dobDay", DAY_DEFAULT);
-        int height = sharedPreferences.getInt("height", HEIGHT_DEFAULT);
-        int weight = sharedPreferences.getInt("weight", WEIGHT_DEFAULT);
-        int activity_level = sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
-        int goal = sharedPreferences.getInt("goal", GOAL_DEFAULT);
+        String gender = getLocalGender(); //sharedPreferences.getString("gender", GENDER_DEFAULT);
+        int dobYear = getLocalDOBYear(); //sharedPreferences.getInt("dobYear", YEAR_DEFAULT);
+        int dobMonth = getLocalDOBMonth(); //sharedPreferences.getInt("dobMonth", MONTH_DEFAULT);
+        int dobDay = getLocalDOBDay(); //sharedPreferences.getInt("dobDay", DAY_DEFAULT);
+        int height = getLocalHeight(); //sharedPreferences.getInt("height", HEIGHT_DEFAULT);
+        float weight = getLocalWeight(); //sharedPreferences.getFloat("weight", WEIGHT_DEFAULT);
+        int activity_level = getLocalActivityLevel(); //sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
+        int goal = getLocalGoal(); //sharedPreferences.getInt("goal", GOAL_DEFAULT);
 
         /*display user stats*/
         Switch genderSwitch = rootView.findViewById(R.id.genderSwitch);
@@ -51,10 +46,10 @@ public class AccountFragment extends Fragment {
         birthdayEditText.setText(dobMonth+"/"+ dobDay +"/"+ dobYear);
 
         EditText heightEditText = rootView.findViewById(R.id.heightEditText);
-        heightEditText.setText(height + " CM");
+        heightEditText.setText(height + " cm");
 
-        EditText weightEditText = rootView.findViewById(R.id.weightEditText);
-        weightEditText.setText(weight + " KG");
+        TextView weightEditText = rootView.findViewById(R.id.weightEditText);
+        weightEditText.setText(weight + " kg");
 
         EditText activityLevelEditText = rootView.findViewById(R.id.activityLevelEditText);
         String[] activity_level_strArray = getResources().getStringArray(R.array.activity_level_array);
@@ -80,8 +75,6 @@ public class AccountFragment extends Fragment {
                 newFragment.show(getFragmentManager(), "height picker");
             }
         });
-
-        //TODO weight editing
 
         return rootView;
     }

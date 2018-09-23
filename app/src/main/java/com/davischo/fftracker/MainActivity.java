@@ -1,6 +1,5 @@
 package com.davischo.fftracker;
 
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.TabLayout;
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     //static Boolean first_time = true;
 
-    private SQLiteDatabase storage;
+    public static SQLiteDatabase storage;
 
     private void populateTables(){
         storage.execSQL("INSERT INTO weight VALUES (1537567923818, 98)");
@@ -48,13 +47,15 @@ public class MainActivity extends AppCompatActivity {
         storage.execSQL("INSERT INTO food VALUES (1537569923818, 'sausages', 400)");
 
         storage.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'bananas', 75)");
+        storage.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
+        storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'running', 100)");
+        storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'fapping', 50)");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //ADDED SQL HERE
         try {
-
             this.deleteDatabase("dataPoints");
             storage = this.openOrCreateDatabase("dataPoints", MODE_PRIVATE, null);
             storage.execSQL("CREATE TABLE IF NOT EXISTS weight (time TEXT, weight INT)");

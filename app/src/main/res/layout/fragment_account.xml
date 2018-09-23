@@ -97,14 +97,15 @@
                 android:id="@+id/heightEditText"
                 android:focusableInTouchMode="false"
                 android:textSize="14sp" />
-            <EditText
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:ems="10"
                 android:id="@+id/weightEditText"
                 android:focusableInTouchMode="false"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                style="?attr/editTextStyle" />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

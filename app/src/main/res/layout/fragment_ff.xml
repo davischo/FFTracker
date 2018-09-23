@@ -16,6 +16,28 @@
         android:textStyle="normal|bold"
         android:textColor="@android:color/black" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView3">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/display">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/calChart"
+                android:layout_width="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_height="200dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
     <android.support.design.widget.FloatingActionButton
         android:text="Button"
         android:layout_width="wrap_content"
@@ -33,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/add_button"
         android:id="@+id/add_menu"
+        android:visibility="invisible"
         android:elevation="20dp"
         android:background="@android:color/darker_gray">
 
@@ -108,7 +131,7 @@
                 android:layout_centerHorizontal="true"
                 android:elevation="10dp"
                 android:id="@+id/add_weight"
-                android:hint="Current Weight in Pounds"
+                android:hint="Today's Weight in kg"
                 android:layout_weight="1"
                 android:gravity="center"/>
         </LinearLayout>
@@ -122,26 +145,6 @@
             android:onClick="submitClicked" />
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/textView3">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/display">
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/calChart"
-                android:layout_width="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_height="200dp" />
-
-        </LinearLayout>
-    </ScrollView>
 
 </RelativeLayout>
