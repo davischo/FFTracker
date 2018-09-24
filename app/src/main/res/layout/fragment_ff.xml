@@ -56,6 +56,7 @@
         android:layout_above="@id/add_button"
         android:id="@+id/add_menu"
         android:visibility="invisible"
+        android:alpha="0"
         android:elevation="20dp"
         android:background="@android:color/darker_gray">
 

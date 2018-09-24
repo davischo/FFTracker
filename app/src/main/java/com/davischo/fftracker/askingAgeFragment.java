@@ -12,7 +12,7 @@ import java.util.Calendar;
 import static com.davischo.fftracker.First_Run_Activity.DAY_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.MONTH_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.YEAR_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.editor;
+import static com.davischo.fftracker.MainActivity.editor;
 
 /**
  * Created by yx on 2018/6/11.

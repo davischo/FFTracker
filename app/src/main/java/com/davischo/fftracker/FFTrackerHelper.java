@@ -4,7 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
+import static com.davischo.fftracker.MainActivity.sharedPreferences;
+
 
 /**
  * Created by yx on 2018/6/16.
@@ -23,11 +24,25 @@ public class FFTrackerHelper {
     static float WEIGHT_DEFAULT = 65.0f;  //in kg
     static int ACTIVITY_LEVEL_DEFAULT = 0;
     static int GOAL_DEFAULT = 0;
+    static String TIMESPAN_DEFAULT = " LIMIT 7";
 
     public static String getCurrentDate(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return format.format(date);
+    }
+
+    public static long getMilliseconds(String myDate){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = null;
+        long millis = 0;
+        try {
+            date = sdf.parse(myDate);
+            millis = date.getTime();
+        }
+        catch(Exception e){
+        }
+        return millis;
     }
 
 //calculate calorie remaining using H-B equation and save it in sharedPref:
@@ -58,6 +73,7 @@ public class FFTrackerHelper {
         int orig_cal_remain = (int) Math.round(BMR * activity_level_factors[activity_level] + goal_offsets[goal_level]);
         return orig_cal_remain;
     }
+
     public static int calculateCalRemain() {
         double BMR;
         if(getLocalGender() == "male"){
@@ -112,5 +128,11 @@ public class FFTrackerHelper {
     public static int getLocalGoal() {
         return sharedPreferences.getInt("goal", GOAL_DEFAULT);
     }
+    public static String getLocalTimeSpan() {
+        return sharedPreferences.getString("timeSpan", TIMESPAN_DEFAULT);
+    }
+//    public static String getCategory() {
+//        return sharedPreferences.getString("category", " weight");
+//    }
 
 }

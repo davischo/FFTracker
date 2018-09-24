@@ -1,6 +1,7 @@
 package com.davischo.fftracker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +15,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import static com.davischo.fftracker.FFFragment.refreshFFFragment;
+
 public class MainActivity extends AppCompatActivity {
+
+    static SharedPreferences sharedPreferences;
+    static SharedPreferences.Editor editor;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -24,37 +30,40 @@ public class MainActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private static SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private static ViewPager mViewPager;
 
     //static Boolean first_time = true;
 
     public static SQLiteDatabase storage;
 
     private void populateTables(){
-        storage.execSQL("INSERT INTO weight VALUES (1537567923818, 98)");
-        storage.execSQL("INSERT INTO weight VALUES (1537567983818, 102)");
-        storage.execSQL("INSERT INTO weight VALUES (1537569923818, 95)");
-        storage.execSQL("INSERT INTO exercise VALUES (1537567923818, 'running', 100)");
-        storage.execSQL("INSERT INTO exercise VALUES (1537567983818, 'studying', 200)");
-        storage.execSQL("INSERT INTO exercise VALUES (1537569923818, 'jerking', 300)");
-        storage.execSQL("INSERT INTO food VALUES (1537567923818, 'eggs', 600)");
-        storage.execSQL("INSERT INTO food VALUES (1537567983818, 'hashbrowns', 500)");
-        storage.execSQL("INSERT INTO food VALUES (1537569923818, 'sausages', 400)");
-
         storage.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'bananas', 75)");
         storage.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
         storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'running', 100)");
         storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'fapping', 50)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-08-22', 75)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-08-22', 65)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-08-22', 70)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-07-22', 65)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-06-22', 60)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-05-22', 75)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-04-22', 65)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-03-22', 70)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-02-22', 65)");
+        storage.execSQL("INSERT INTO weight VALUES ('2018-01-22', 60)");
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //ADDED SQL HERE
+
+        sharedPreferences = this.getSharedPreferences("fftracker", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         try {
             this.deleteDatabase("dataPoints");
             storage = this.openOrCreateDatabase("dataPoints", MODE_PRIVATE, null);
@@ -89,6 +98,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void submitClicked(View v){
         FFFragment.submitClicked(v);
+        refreshAll();
+    }
+
+    public static void refreshAll(){
         mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 

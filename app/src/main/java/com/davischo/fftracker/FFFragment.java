@@ -1,10 +1,13 @@
 package com.davischo.fftracker;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +26,8 @@ import com.github.mikephil.charting.data.PieEntry;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.davischo.fftracker.First_Run_Activity.editor;
+import static com.davischo.fftracker.FFTrackerHelper.*;
+import static com.davischo.fftracker.MainActivity.editor;
 import static com.davischo.fftracker.MainActivity.storage;
 import static com.davischo.fftracker.R.layout.fragment_ff;
 
@@ -38,6 +42,7 @@ public class FFFragment extends Fragment{
     LinearLayout add_menu;
     static EditText add_weight, add_exercised, add_eaten;
     static EditText food_name, exercise_name;
+    static Fragment ffFragment;
 
     public static void submitClicked(View v){
         if(add_weight.getText().toString().equals("") && add_exercised.getText().toString().equals("")
@@ -49,7 +54,8 @@ public class FFFragment extends Fragment{
             }
             if(!add_weight.getText().toString().equals("")){
                 String rounded = String.format("%.1f", Float.valueOf(add_weight.getText().toString()));
-                System.out.println("ROUNDED VALUE IS"  + rounded);
+                storage.execSQL("INSERT INTO weight VALUES ('"
+                        + getCurrentDate() + "', " + Float.valueOf(rounded) + ")");
                 editor.putFloat("weight", Float.valueOf(rounded)).commit();
                 //STORE DATA HERE
                 add_weight.setText("");
@@ -60,7 +66,7 @@ public class FFFragment extends Fragment{
                     exerciseName = exercise_name.getText().toString();
                 }
                 System.out.println("EXERCISE ENTERED IS:" + Integer.valueOf(add_exercised.getText().toString()));
-                storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', '"
+                storage.execSQL("INSERT INTO exercise VALUES ('" + getCurrentDate() + "', '"
                         + exerciseName + "', "
                         + Integer.valueOf(add_exercised.getText().toString()) + ")");
                 //STORED DATA HERE
@@ -73,7 +79,7 @@ public class FFFragment extends Fragment{
                     foodName = food_name.getText().toString();
                 }
                 System.out.println("FOOD ENTERED IS:" + Integer.valueOf(add_eaten.getText().toString()));
-                storage.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', '"
+                storage.execSQL("INSERT INTO food VALUES ('" + getCurrentDate() + "', '"
                         + foodName + "', "
                         + Integer.valueOf(add_eaten.getText().toString()) + ")");
                 //STORED DATA HERE
@@ -86,6 +92,8 @@ public class FFFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(fragment_ff, container, false);
+
+        ffFragment = this;
 
         display = rootView.findViewById(R.id.display);
 
@@ -100,7 +108,7 @@ public class FFFragment extends Fragment{
         LinearLayout newLin;
         TextView newText;
         Button newButton;
-        String currDate = FFTrackerHelper.getCurrentDate();
+        String currDate = getCurrentDate();
 
         int foodCal = 0, exerciseCal = 0;
         //Populate food list
@@ -195,14 +203,8 @@ public class FFFragment extends Fragment{
         List<PieEntry> entries = new ArrayList<PieEntry>();
         entries.add(new PieEntry(exerciseCal, "Exercised"));
         entries.add(new PieEntry(foodCal, "Eaten"));
-        int calRemain = 2000;
-        try {
-            calRemain = FFTrackerHelper.calculateCalRemain();
-        }
-        catch(NullPointerException e){
-            //First Run Activity needs to run first.
-            System.out.println("Currently running First_Run_Activity.");
-        }
+        //int calRemain = 2000;
+        int calRemain = calculateCalRemain();
         if(foodCal>=calRemain)
             calRemain = 0;
         else
@@ -230,17 +232,33 @@ public class FFFragment extends Fragment{
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("PLUS BUTTON PRESSED");
                 if(add_menu.getVisibility()==View.VISIBLE) {
-                    add_menu.setVisibility(View.INVISIBLE);
+                    add_menu.animate().alpha(0).setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            add_menu.setEnabled(false);
+                            add_menu.setVisibility(View.INVISIBLE);
+                        }
+                    });
                 }
                 else {
                     add_menu.setVisibility(View.VISIBLE);
+                    add_menu.animate().alpha(1).setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            add_menu.setEnabled(true);
+                        }
+                    });
                 }
             }
         });
 
         return rootView;
+    }
+
+    public static void refreshFFFragment(){
+        FragmentTransaction ft = ffFragment.getFragmentManager().beginTransaction();
+        ft.detach(ffFragment).attach(ffFragment).commit();
     }
 
     private class FoodListener implements View.OnClickListener {
@@ -257,6 +275,9 @@ public class FFFragment extends Fragment{
         public void onClick(View view) {
             //TODO SQL Query here
             System.out.println("Date, food, cal" + date + food + calories);
+            storage.execSQL("DELETE FROM food WHERE time='" + date
+                    + "' AND name='" + food + "' AND calories='" + calories + "'");
+            refreshFFFragment();
         }
     }
 
@@ -274,6 +295,9 @@ public class FFFragment extends Fragment{
         public void onClick(View view) {
             //TODO SQL Query here
             System.out.println("Date, exercise, cal" + date + exercise + calories);
+            storage.execSQL("DELETE FROM exercise WHERE time='" + date
+                    + "' AND name='" + exercise + "' AND calories='" + calories + "'");
+            refreshFFFragment();
         }
     }
 

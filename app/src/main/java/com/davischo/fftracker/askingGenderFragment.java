@@ -10,8 +10,9 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import static com.davischo.fftracker.First_Run_Activity.editor;
-import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
+import static com.davischo.fftracker.MainActivity.editor;
+import static com.davischo.fftracker.MainActivity.sharedPreferences;
+
 
 /**
  * Created by yx on 2018/6/11.

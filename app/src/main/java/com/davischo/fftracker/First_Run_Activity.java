@@ -16,10 +16,11 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import static com.davischo.fftracker.FFTrackerHelper.getAge;
+import static com.davischo.fftracker.FFTrackerHelper.getCurrentDate;
+import static com.davischo.fftracker.MainActivity.editor;
+import static com.davischo.fftracker.MainActivity.sharedPreferences;
 
 //public class First_Run_Activity extends AppCompatActivity {
-
-
 
 public class First_Run_Activity extends FragmentActivity {
         /**
@@ -41,8 +42,7 @@ public class First_Run_Activity extends FragmentActivity {
         static RadioGroup radioGroup;
         Button completeButton;
 
-        static SharedPreferences sharedPreferences;
-        static SharedPreferences.Editor editor;
+
 
         static int YEAR_DEFAULT = 1980;
         static int MONTH_DEFAULT = 1;
@@ -73,8 +73,7 @@ public class First_Run_Activity extends FragmentActivity {
             //push all data stored in sharedpreference onto database:
             try {
                 SQLiteDatabase db = openOrCreateDatabase("dataPoints", MODE_PRIVATE, null);
-                long currTime = System.currentTimeMillis();
-                db.execSQL("INSERT INTO weight (time, weight) VALUES (" + currTime + "," + weight + ")");
+                db.execSQL("INSERT INTO weight (time, weight) VALUES ('" + getCurrentDate() + "'," + weight + ")");
                 db.close();
             }
             catch(Exception e){
@@ -95,9 +94,6 @@ public class First_Run_Activity extends FragmentActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_first_run);
-
-            sharedPreferences = this.getSharedPreferences("fftracker", MODE_PRIVATE);
-            editor = sharedPreferences.edit();
 
             //save default user data:
             editor.putString("gender", GENDER_DEFAULT);

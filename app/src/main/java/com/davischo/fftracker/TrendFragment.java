@@ -1,11 +1,13 @@
 package com.davischo.fftracker;
 
+import android.database.Cursor;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -18,10 +20,18 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+
+import static com.davischo.fftracker.FFTrackerHelper.getLocalTimeSpan;
+import static com.davischo.fftracker.MainActivity.editor;
+import static com.davischo.fftracker.MainActivity.refreshAll;
+import static com.davischo.fftracker.MainActivity.sharedPreferences;
+import static com.davischo.fftracker.MainActivity.storage;
 
 /**
  * Created by davischo on 6/14/18.
@@ -30,6 +40,7 @@ import java.util.List;
 public class TrendFragment extends Fragment {
     Spinner timeSpan, category;
     LineChart display;
+    //List<String> times;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,28 +50,89 @@ public class TrendFragment extends Fragment {
         category = rootView.findViewById(R.id.category);
         display = rootView.findViewById(R.id.trendDisplay);
 
-        List<String> times = new ArrayList<String>();
-        times.add("Week");
-        times.add("Month");
-        times.add("Year");
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, times);
-        timeSpan.setAdapter(arrayAdapter);
-        timeSpan.setSelection(0);
+        String query = "";
 
-        List<String> categories = new ArrayList<String>();
+        //TODO Fix the category for the graph
+        final List<String> categories = new ArrayList<String>();
         categories.add("Weight");
         categories.add("Calories Burned");
         categories.add("Calories Consumed");
         ArrayAdapter arrayAdapter1 = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, categories);
         category.setAdapter(arrayAdapter1);
-        category.setSelection(0);
+        //category.setSelection(0);
+        category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch(i) {
+                    case 0: {
+                        editor.putString("category", "weight").commit();
+                    }
+                    case 1: {
+                        editor.putString("category", "exercise").commit();
+                    }
+                    case 2: {
+                        editor.putString("category", "food").commit();
+                    }
+                }
+                populateGraph();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                editor.putString("category","weight").commit();
+            }
+        });
+
+        //TODO Fix the time span for the graph
+        final List<String> times = new ArrayList<String>();
+        times.add("Last 7");
+        times.add("Last 30");
+        times.add("All-time");
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, times);
+        timeSpan.setAdapter(arrayAdapter);
+        timeSpan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch(i) {
+                    case 0: {
+                        editor.putString("timeSpan", " LIMIT 7").commit();
+                    }
+                    case 1: {
+                        editor.putString("timeSpan", " LIMIT 30").commit();
+                    }
+                    case 2: {
+                        editor.putString("timeSpan", "").commit();
+                    }
+                }
+                System.out.println("TIME SPAN IS " + getLocalTimeSpan());
+                populateGraph();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                editor.putString("timeSpan"," LIMIT 7").commit();
+            }
+        });
+
+        populateGraph();;
+
+        return rootView;
+    }
+
+    private void populateGraph(){
 
         ArrayList<Entry> entries = new ArrayList<Entry>();
-        entries.add(new Entry(1529119353000f, 200f));
-        entries.add(new Entry(1529205753000f, 195f));
-        entries.add(new Entry(1529292153000f, 190f));
-        entries.add(new Entry(1529378553000f, 180f));
-        entries.add(new Entry(1529464953000f, 150f));
+        Cursor c = null;
+        c = storage.rawQuery(
+                "SELECT time, AVG(weight) AS weight FROM weight GROUP BY time" + getLocalTimeSpan(), null);
+        System.out.println("SELECT time, AVG(weight) AS weight FROM weight GROUP BY time" + getLocalTimeSpan());
+        int timeIndex = c.getColumnIndex("time");
+        int weightIndex = c.getColumnIndex("weight");
+        c.moveToFirst();
+        while(!c.isAfterLast()){
+            entries.add(new Entry(FFTrackerHelper.getMilliseconds(c.getString(timeIndex)), c.getInt(weightIndex)));
+            c.moveToNext();
+        }
         LineDataSet lineDataSet = new LineDataSet(entries, "Weight");
         LineData lineData = new LineData(lineDataSet);
         XAxis xAxis = display.getXAxis();
@@ -83,8 +155,6 @@ public class TrendFragment extends Fragment {
         display.setBackgroundColor(Color.LTGRAY);
         display.setBorderColor(Color.CYAN);
         display.invalidate();
-
-        return rootView;
     }
 }
 

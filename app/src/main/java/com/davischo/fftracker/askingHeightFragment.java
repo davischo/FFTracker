@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
 
-import static com.davischo.fftracker.First_Run_Activity.editor;
+import static com.davischo.fftracker.MainActivity.editor;
 
 /**
  * Created by yx on 2018/6/11.

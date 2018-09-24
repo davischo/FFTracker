@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,22 +21,24 @@ import static com.davischo.fftracker.FFTrackerHelper.*;
 
 public class AccountFragment extends Fragment {
 
-    FragmentManager fm = getFragmentManager();
+    static Fragment accFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View rootView = inflater.inflate(R.layout.fragment_account, container, false);
 
+        accFragment = this;
+
         //display user stats on my account page
-        String gender = getLocalGender(); //sharedPreferences.getString("gender", GENDER_DEFAULT);
-        int dobYear = getLocalDOBYear(); //sharedPreferences.getInt("dobYear", YEAR_DEFAULT);
-        int dobMonth = getLocalDOBMonth(); //sharedPreferences.getInt("dobMonth", MONTH_DEFAULT);
-        int dobDay = getLocalDOBDay(); //sharedPreferences.getInt("dobDay", DAY_DEFAULT);
-        int height = getLocalHeight(); //sharedPreferences.getInt("height", HEIGHT_DEFAULT);
-        float weight = getLocalWeight(); //sharedPreferences.getFloat("weight", WEIGHT_DEFAULT);
-        int activity_level = getLocalActivityLevel(); //sharedPreferences.getInt("activity_level", ACTIVITY_LEVEL_DEFAULT);
-        int goal = getLocalGoal(); //sharedPreferences.getInt("goal", GOAL_DEFAULT);
+        String gender = getLocalGender();
+        int dobYear = getLocalDOBYear();
+        int dobMonth = getLocalDOBMonth();
+        int dobDay = getLocalDOBDay();
+        int height = getLocalHeight();
+        float weight = getLocalWeight();
+        int activity_level = getLocalActivityLevel();
+        int goal = getLocalGoal();
 
         /*display user stats*/
         Switch genderSwitch = rootView.findViewById(R.id.genderSwitch);
@@ -77,5 +80,10 @@ public class AccountFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    public static void refreshAccountFragment(){
+        FragmentTransaction ft = accFragment.getFragmentManager().beginTransaction();
+        ft.detach(accFragment).attach(accFragment).commit();
     }
 }

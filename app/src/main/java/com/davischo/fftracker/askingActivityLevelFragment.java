@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import static com.davischo.fftracker.First_Run_Activity.editor;
+import static com.davischo.fftracker.MainActivity.editor;
 
 /**
  * Created by yx on 2018/6/11.

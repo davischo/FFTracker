@@ -15,11 +15,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import static android.app.AlertDialog.THEME_HOLO_LIGHT;
+import static com.davischo.fftracker.FFFragment.refreshFFFragment;
 import static com.davischo.fftracker.First_Run_Activity.DAY_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.MONTH_DEFAULT;
 import static com.davischo.fftracker.First_Run_Activity.YEAR_DEFAULT;
-import static com.davischo.fftracker.First_Run_Activity.editor;
-import static com.davischo.fftracker.First_Run_Activity.sharedPreferences;
+import static com.davischo.fftracker.MainActivity.editor;
+import static com.davischo.fftracker.MainActivity.refreshAll;
+import static com.davischo.fftracker.MainActivity.sharedPreferences;
 
 /**
  * Created by yx on 2018/6/12.
@@ -55,6 +57,7 @@ public class birthDatePickerFragment extends DialogFragment implements DatePicke
         editor.commit();
 
         Toast.makeText(getActivity(), "Your information successfully updated", Toast.LENGTH_SHORT).show();
+        refreshFFFragment();
         //push DOB data onto database:
 
 

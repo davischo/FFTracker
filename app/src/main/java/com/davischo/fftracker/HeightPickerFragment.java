@@ -10,6 +10,10 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
+import static com.davischo.fftracker.FFFragment.refreshFFFragment;
+import static com.davischo.fftracker.MainActivity.editor;
+import static com.davischo.fftracker.MainActivity.refreshAll;
+
 /**
  * Created by yx on 2018/6/17.
  */
@@ -26,8 +30,10 @@ public class HeightPickerFragment extends DialogFragment implements NumberPicker
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-               onValueChange(numberPicker, numberPicker.getValue(), numberPicker.getValue());
+                onValueChange(numberPicker, numberPicker.getValue(), numberPicker.getValue());
                 //set new height edittext;
+                editor.putInt("height", numberPicker.getValue()).commit();
+                refreshFFFragment();
                 EditText heightEditText = getActivity().findViewById(R.id.heightEditText);
                 heightEditText.setText(numberPicker.getValue() + " CM");
             }
@@ -35,7 +41,7 @@ public class HeightPickerFragment extends DialogFragment implements NumberPicker
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                onValueChange(numberPicker, numberPicker.getValue(), numberPicker.getValue());
+                //onValueChange(numberPicker, numberPicker.getValue(), numberPicker.getValue());
                 //do nothing.
             }
         });
@@ -44,6 +50,5 @@ public class HeightPickerFragment extends DialogFragment implements NumberPicker
     }
     public void onValueChange(NumberPicker numberPicker, int i, int i1) {
         Toast.makeText(getActivity(), "VALUE CHANGED", Toast.LENGTH_SHORT).show();
-        Log.i("value changed", "true");
     }
 }
