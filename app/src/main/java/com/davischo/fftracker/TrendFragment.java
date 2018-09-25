@@ -13,24 +13,17 @@ import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
-import static com.davischo.fftracker.FFTrackerHelper.getLocalTimeSpan;
-import static com.davischo.fftracker.MainActivity.editor;
-import static com.davischo.fftracker.MainActivity.refreshAll;
-import static com.davischo.fftracker.MainActivity.sharedPreferences;
 import static com.davischo.fftracker.MainActivity.storage;
 
 /**
@@ -101,13 +94,18 @@ public class TrendFragment extends Fragment {
         ArrayList<Entry> entries = new ArrayList<Entry>();
         Cursor c = null;
         c = storage.rawQuery(query, null);
-        //System.out.println(query);
         int timeIndex = c.getColumnIndex("time");
         int valueIndex = c.getColumnIndex("value");
         c.moveToFirst();
-        while(!c.isAfterLast()){
+        while(c!=null && !c.isAfterLast()){
             entries.add(new Entry(FFTrackerHelper.getMilliseconds(c.getString(timeIndex)), c.getInt(valueIndex)));
             c.moveToNext();
+        }
+        if(entries.isEmpty()){
+            display.clear();
+            display.setBackgroundColor(Color.CYAN);
+            display.setNoDataText("Oops, enter some values first!");
+            return;
         }
         LineDataSet lineDataSet = new LineDataSet(entries, "Weight");
         LineData lineData = new LineData(lineDataSet);
@@ -128,8 +126,8 @@ public class TrendFragment extends Fragment {
         display.getLegend().setEnabled(false);
         display.setData(lineData);
         display.setDescription(null);
-        display.setBackgroundColor(Color.LTGRAY);
-        display.setBorderColor(Color.CYAN);
+        display.setBackgroundColor(Color.WHITE);
+        display.setBorderColor(Color.RED);
         display.invalidate();
     }
 }

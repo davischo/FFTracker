@@ -28,6 +28,7 @@ import java.util.List;
 
 import static com.davischo.fftracker.FFTrackerHelper.*;
 import static com.davischo.fftracker.MainActivity.editor;
+import static com.davischo.fftracker.MainActivity.refreshAll;
 import static com.davischo.fftracker.MainActivity.storage;
 import static com.davischo.fftracker.R.layout.fragment_ff;
 
@@ -277,7 +278,7 @@ public class FFFragment extends Fragment{
             System.out.println("Date, food, cal" + date + food + calories);
             storage.execSQL("DELETE FROM food WHERE time='" + date
                     + "' AND name='" + food + "' AND calories='" + calories + "'");
-            refreshFFFragment();
+            refreshAll();
         }
     }
 
@@ -297,7 +298,7 @@ public class FFFragment extends Fragment{
             System.out.println("Date, exercise, cal" + date + exercise + calories);
             storage.execSQL("DELETE FROM exercise WHERE time='" + date
                     + "' AND name='" + exercise + "' AND calories='" + calories + "'");
-            refreshFFFragment();
+            refreshAll();
         }
     }
 

@@ -83,6 +83,7 @@ public class First_Run_Activity extends FragmentActivity {
             //switch to main activity
             Intent intent = new Intent(First_Run_Activity.this, MainActivity.class);
             intent.putExtra("first_time", false);
+            editor.putBoolean("first_time", false).commit();
             startActivity(intent);
         }
 

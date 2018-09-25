@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         storage.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
         storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'running', 100)");
         storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'fapping', 50)");
+
         storage.execSQL("INSERT INTO weight VALUES ('2018-08-22', 75)");
         storage.execSQL("INSERT INTO weight VALUES ('2018-08-22', 65)");
         storage.execSQL("INSERT INTO weight VALUES ('2018-08-22', 70)");
@@ -56,6 +57,30 @@ public class MainActivity extends AppCompatActivity {
         storage.execSQL("INSERT INTO weight VALUES ('2018-03-22', 70)");
         storage.execSQL("INSERT INTO weight VALUES ('2018-02-22', 65)");
         storage.execSQL("INSERT INTO weight VALUES ('2018-01-22', 60)");
+
+        storage.execSQL("INSERT INTO food VALUES ('2018-08-22', 'Food', 100)");
+        storage.execSQL("INSERT INTO food VALUES ('2018-08-22', 'Food', 200)");
+        storage.execSQL("INSERT INTO food VALUES ('2018-08-22', 'Food', 300)");
+        storage.execSQL("INSERT INTO food VALUES ('2018-07-22', 'Food', 700)");
+        storage.execSQL("INSERT INTO food VALUES ('2018-06-22', 'Food', 800)");
+        storage.execSQL("INSERT INTO food VALUES ('2018-05-22', 'Food', 900)");
+        storage.execSQL("INSERT INTO food VALUES ('2018-04-22', 'Food', 1000)");
+        storage.execSQL("INSERT INTO food VALUES ('2018-03-22', 'Food', 900)");
+        storage.execSQL("INSERT INTO food VALUES ('2018-02-22', 'Food', 800)");
+        storage.execSQL("INSERT INTO food VALUES ('2018-01-22', 'Food', 700)");
+
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-08-22', 'Exercise', 100)");
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-08-22', 'Exercise', 200)");
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-08-22', 'Exercise', 300)");
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-07-22', 'Exercise', 700)");
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-06-22', 'Exercise', 800)");
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-05-22', 'Exercise', 900)");
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-04-22', 'Exercise', 1000)");
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-03-22', 'Exercise', 900)");
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-02-22', 'Exercise', 800)");
+        storage.execSQL("INSERT INTO exercise VALUES ('2018-01-22', 'Exercise', 700)");
+
+        //editor.clear().commit();
     }
 
     @Override
@@ -65,18 +90,19 @@ public class MainActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         try {
-            this.deleteDatabase("dataPoints");
+            //this.deleteDatabase("dataPoints");
             storage = this.openOrCreateDatabase("dataPoints", MODE_PRIVATE, null);
             storage.execSQL("CREATE TABLE IF NOT EXISTS weight (time TEXT, weight INT)");
             storage.execSQL("CREATE TABLE IF NOT EXISTS exercise (time TEXT, name TEXT, calories INT)");
             storage.execSQL("CREATE TABLE IF NOT EXISTS food (time TEXT, name TEXT, calories INT)");
-            populateTables();
+            //populateTables();
         }
         catch(Exception e){
             System.out.println("Something went wrong");
         }
 
-        if(getIntent().getBooleanExtra("first_time", true)) {
+        //if(getIntent().getBooleanExtra("first_time", true)) {
+        if(sharedPreferences.getBoolean("first_time", true)) {
             startActivity(new Intent(MainActivity.this, First_Run_Activity.class));
             Toast.makeText(MainActivity.this, "First Run", Toast.LENGTH_LONG)
                     .show();
