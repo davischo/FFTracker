@@ -25,6 +25,20 @@ public class FFTrackerHelper {
     static int ACTIVITY_LEVEL_DEFAULT = 0;
     static int GOAL_DEFAULT = 0;
     static String TIMESPAN_DEFAULT = " LIMIT 7";
+    static String[][] queries = {
+            {"SELECT time, AVG(weight) AS value FROM weight GROUP BY time LIMIT 7",
+                    "SELECT time, SUM(calories) AS value FROM food GROUP BY time LIMIT 7",
+                    "SELECT time, SUM(calories) AS value FROM exercise GROUP BY time LIMIT 7"
+            },
+            {"SELECT time, AVG(weight) AS value FROM weight GROUP BY time LIMIT 30",
+                    "SELECT time, SUM(calories) AS value FROM food GROUP BY time LIMIT 30",
+                    "SELECT time, SUM(calories) AS value FROM exercise GROUP BY time LIMIT 30"
+            },
+            {"SELECT time, AVG(weight) AS value FROM weight GROUP BY time",
+                    "SELECT time, SUM(calories) AS value FROM food GROUP BY time",
+                    "SELECT time, SUM(calories) AS value FROM exercise GROUP BY time"
+            }
+    };
 
     public static String getCurrentDate(){
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

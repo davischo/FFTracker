@@ -40,7 +40,7 @@ import static com.davischo.fftracker.MainActivity.storage;
 public class TrendFragment extends Fragment {
     Spinner timeSpan, category;
     LineChart display;
-    //List<String> times;
+    int timeInd = 0, categoryInd = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,31 +55,21 @@ public class TrendFragment extends Fragment {
         //TODO Fix the category for the graph
         final List<String> categories = new ArrayList<String>();
         categories.add("Weight");
+        categories.add("Calories Eaten");
         categories.add("Calories Burned");
-        categories.add("Calories Consumed");
         ArrayAdapter arrayAdapter1 = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, categories);
         category.setAdapter(arrayAdapter1);
         //category.setSelection(0);
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch(i) {
-                    case 0: {
-                        editor.putString("category", "weight").commit();
-                    }
-                    case 1: {
-                        editor.putString("category", "exercise").commit();
-                    }
-                    case 2: {
-                        editor.putString("category", "food").commit();
-                    }
-                }
-                populateGraph();
+                //System.out.println("CATEGORY CHOSEN IS: " + i);
+                categoryInd = i;
+                populateGraph(FFTrackerHelper.queries[timeInd][categoryInd]);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                editor.putString("category","weight").commit();
             }
         });
 
@@ -93,44 +83,30 @@ public class TrendFragment extends Fragment {
         timeSpan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                switch(i) {
-                    case 0: {
-                        editor.putString("timeSpan", " LIMIT 7").commit();
-                    }
-                    case 1: {
-                        editor.putString("timeSpan", " LIMIT 30").commit();
-                    }
-                    case 2: {
-                        editor.putString("timeSpan", "").commit();
-                    }
-                }
-                System.out.println("TIME SPAN IS " + getLocalTimeSpan());
-                populateGraph();
+                //System.out.println("TIME SPAN CHOSEN IS: " + i);
+                timeInd = i;
+                populateGraph(FFTrackerHelper.queries[timeInd][categoryInd]);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                editor.putString("timeSpan"," LIMIT 7").commit();
             }
         });
-
-        populateGraph();;
 
         return rootView;
     }
 
-    private void populateGraph(){
+    private void populateGraph(String query){
 
         ArrayList<Entry> entries = new ArrayList<Entry>();
         Cursor c = null;
-        c = storage.rawQuery(
-                "SELECT time, AVG(weight) AS weight FROM weight GROUP BY time" + getLocalTimeSpan(), null);
-        System.out.println("SELECT time, AVG(weight) AS weight FROM weight GROUP BY time" + getLocalTimeSpan());
+        c = storage.rawQuery(query, null);
+        //System.out.println(query);
         int timeIndex = c.getColumnIndex("time");
-        int weightIndex = c.getColumnIndex("weight");
+        int valueIndex = c.getColumnIndex("value");
         c.moveToFirst();
         while(!c.isAfterLast()){
-            entries.add(new Entry(FFTrackerHelper.getMilliseconds(c.getString(timeIndex)), c.getInt(weightIndex)));
+            entries.add(new Entry(FFTrackerHelper.getMilliseconds(c.getString(timeIndex)), c.getInt(valueIndex)));
             c.moveToNext();
         }
         LineDataSet lineDataSet = new LineDataSet(entries, "Weight");
