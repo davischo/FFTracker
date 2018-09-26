@@ -41,7 +41,6 @@ public class HeightPickerFragment extends DialogFragment implements NumberPicker
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //onValueChange(numberPicker, numberPicker.getValue(), numberPicker.getValue());
                 //do nothing.
             }
         });
@@ -49,6 +48,6 @@ public class HeightPickerFragment extends DialogFragment implements NumberPicker
         return builder.create();
     }
     public void onValueChange(NumberPicker numberPicker, int i, int i1) {
-        Toast.makeText(getActivity(), "VALUE CHANGED", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Height Changed!", Toast.LENGTH_SHORT).show();
     }
 }

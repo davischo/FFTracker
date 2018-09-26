@@ -56,7 +56,7 @@ public class birthDatePickerFragment extends DialogFragment implements DatePicke
 
         editor.commit();
 
-        Toast.makeText(getActivity(), "Your information successfully updated", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Successfully Updated!", Toast.LENGTH_SHORT).show();
         refreshFFFragment();
         //push DOB data onto database:
 

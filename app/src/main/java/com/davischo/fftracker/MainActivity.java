@@ -42,43 +42,53 @@ public class MainActivity extends AppCompatActivity {
     public static SQLiteDatabase storage;
 
     private void populateTables(){
-        storage.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'bananas', 75)");
-        storage.execSQL("INSERT INTO food VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
-        storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'running', 100)");
-        storage.execSQL("INSERT INTO exercise VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'fapping', 50)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'bananas', 75)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'bananas', 75)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'bananas', 75)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'bananas', 75)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'bananas', 75)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'bananas', 75)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'apples', 55)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'running', 100)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('" + FFTrackerHelper.getCurrentDate() + "', 'fapping', 50)");
 
-        storage.execSQL("INSERT INTO weight VALUES ('2018-08-22', 75)");
-        storage.execSQL("INSERT INTO weight VALUES ('2018-08-22', 65)");
-        storage.execSQL("INSERT INTO weight VALUES ('2018-08-22', 70)");
-        storage.execSQL("INSERT INTO weight VALUES ('2018-07-22', 65)");
-        storage.execSQL("INSERT INTO weight VALUES ('2018-06-22', 60)");
-        storage.execSQL("INSERT INTO weight VALUES ('2018-05-22', 75)");
-        storage.execSQL("INSERT INTO weight VALUES ('2018-04-22', 65)");
-        storage.execSQL("INSERT INTO weight VALUES ('2018-03-22', 70)");
-        storage.execSQL("INSERT INTO weight VALUES ('2018-02-22', 65)");
-        storage.execSQL("INSERT INTO weight VALUES ('2018-01-22', 60)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180822', 75)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180822', 65)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180822', 70)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180722', 65)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180622', 60)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180522', 75)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180422', 65)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180322', 70)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180222', 65)");
+        storage.execSQL("INSERT INTO weight(time, weight) VALUES ('20180122', 60)");
 
-        storage.execSQL("INSERT INTO food VALUES ('2018-08-22', 'Food', 100)");
-        storage.execSQL("INSERT INTO food VALUES ('2018-08-22', 'Food', 200)");
-        storage.execSQL("INSERT INTO food VALUES ('2018-08-22', 'Food', 300)");
-        storage.execSQL("INSERT INTO food VALUES ('2018-07-22', 'Food', 700)");
-        storage.execSQL("INSERT INTO food VALUES ('2018-06-22', 'Food', 800)");
-        storage.execSQL("INSERT INTO food VALUES ('2018-05-22', 'Food', 900)");
-        storage.execSQL("INSERT INTO food VALUES ('2018-04-22', 'Food', 1000)");
-        storage.execSQL("INSERT INTO food VALUES ('2018-03-22', 'Food', 900)");
-        storage.execSQL("INSERT INTO food VALUES ('2018-02-22', 'Food', 800)");
-        storage.execSQL("INSERT INTO food VALUES ('2018-01-22', 'Food', 700)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180822', 'Food', 100)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180822', 'Food', 200)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180822', 'Food', 300)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180722', 'Food', 700)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180622', 'Food', 800)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180522', 'Food', 900)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180422', 'Food', 1000)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180322', 'Food', 900)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180222', 'Food', 800)");
+        storage.execSQL("INSERT INTO food(time, name, calories) VALUES ('20180122', 'Food', 700)");
 
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-08-22', 'Exercise', 100)");
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-08-22', 'Exercise', 200)");
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-08-22', 'Exercise', 300)");
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-07-22', 'Exercise', 700)");
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-06-22', 'Exercise', 800)");
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-05-22', 'Exercise', 900)");
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-04-22', 'Exercise', 1000)");
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-03-22', 'Exercise', 900)");
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-02-22', 'Exercise', 800)");
-        storage.execSQL("INSERT INTO exercise VALUES ('2018-01-22', 'Exercise', 700)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180822', 'Exercise', 100)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180822', 'Exercise', 200)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180822', 'Exercise', 300)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180722', 'Exercise', 700)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180622', 'Exercise', 800)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180522', 'Exercise', 900)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180422', 'Exercise', 1000)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180322', 'Exercise', 900)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180222', 'Exercise', 800)");
+        storage.execSQL("INSERT INTO exercise(time, name, calories) VALUES ('20180122', 'Exercise', 700)");
 
         //editor.clear().commit();
     }
@@ -90,12 +100,15 @@ public class MainActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         try {
-            //this.deleteDatabase("dataPoints");
+            this.deleteDatabase("dataPoints");
             storage = this.openOrCreateDatabase("dataPoints", MODE_PRIVATE, null);
-            storage.execSQL("CREATE TABLE IF NOT EXISTS weight (time TEXT, weight INT)");
-            storage.execSQL("CREATE TABLE IF NOT EXISTS exercise (time TEXT, name TEXT, calories INT)");
-            storage.execSQL("CREATE TABLE IF NOT EXISTS food (time TEXT, name TEXT, calories INT)");
-            //populateTables();
+            storage.execSQL(
+                    "CREATE TABLE IF NOT EXISTS weight (id INTEGER UNIQUE PRIMARY KEY, time TEXT, weight INT)");
+            storage.execSQL(
+                    "CREATE TABLE IF NOT EXISTS exercise (id INTEGER UNIQUE PRIMARY KEY, time TEXT, name TEXT, calories INT)");
+            storage.execSQL(
+                    "CREATE TABLE IF NOT EXISTS food (id INTEGER UNIQUE PRIMARY KEY, time TEXT, name TEXT, calories INT)");
+            populateTables();
         }
         catch(Exception e){
             System.out.println("Something went wrong");

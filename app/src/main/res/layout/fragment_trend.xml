@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,35 +7,45 @@
         android:text="Trend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
         android:textSize="30sp"
         android:textAlignment="center"
         android:textStyle="normal|bold"
         android:textColor="@android:color/black"
         android:fontFamily="sans-serif"
         android:layout_weight=".5"
-        android:background="@android:color/holo_blue_light"/>
+        android:background="@color/colorPrimaryDark"
+        android:backgroundTint="@color/colorPrimary" />
 
-    <Spinner
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/timeSpan"
-        android:layout_weight="1"
-        android:background="@android:color/holo_green_light" />
+        android:background="@drawable/spinner_bg">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/timeSpan" />
+
+    </RelativeLayout>
 
     <com.github.mikephil.charting.charts.LineChart
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="4"
-        android:background="@color/colorPrimary"
+        android:background="@color/backGround"
         android:id="@+id/trendDisplay">
     </com.github.mikephil.charting.charts.LineChart>
 
-    <Spinner
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/category"
-        android:layout_weight="1"
-        android:background="@android:color/holo_green_light"/>
+        android:background="@drawable/spinner_bg">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/category"/>
+
+    </RelativeLayout>
 
 </LinearLayout>

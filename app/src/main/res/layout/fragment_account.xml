@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/backGround">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical" android:layout_width="match_parent"
@@ -13,11 +14,14 @@
             android:text="Profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView"
+            android:textSize="30sp"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textStyle="normal|bold"
             android:textColor="@android:color/black"
-            android:layout_marginTop="10dp"/>
+            android:fontFamily="sans-serif"
+            android:layout_weight=".5"
+            android:background="@color/colorPrimaryDark"
+            android:backgroundTint="@color/colorPrimary" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -36,7 +40,12 @@
                 android:switchTextAppearance="@style/TextAppearance.AppCompat.Display1"
                 android:layout_width="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="15dp"
+                android:trackTint="@color/colorPrimary"
+                android:thumbTint="@color/colorPrimary"
+                android:backgroundTint="@color/colorPrimary"
+                android:button="@color/colorPrimary"
+                android:buttonTint="@color/colorPrimary" />
 
             <TextView
                 android:text="Male"
@@ -76,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:text=""
-                android:hint="Enter your name"
+                android:hint="Enter Your Name"
                 android:ems="10"
                 android:id="@+id/usernameEditText"
                 android:textSize="14sp" />
@@ -102,26 +111,28 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:ems="10"
-                android:id="@+id/weightEditText"
+                android:id="@+id/weightText"
                 android:focusableInTouchMode="false"
                 android:textSize="14sp"
                 style="?attr/editTextStyle" />
-            <EditText
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:ems="10"
-                android:id="@+id/activityLevelEditText"
+                android:id="@+id/activityLevelSpinner"
                 android:focusableInTouchMode="false"
-                android:textSize="14sp" />
-            <EditText
+                android:textSize="14sp"
+                android:backgroundTint="@color/colorAccent" />
+            <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:ems="10"
-                android:id="@+id/goalEditText"
+                android:id="@+id/goalSpinner"
                 android:focusableInTouchMode="false"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:backgroundTint="@color/colorAccent"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

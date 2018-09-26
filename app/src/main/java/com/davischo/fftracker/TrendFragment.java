@@ -52,11 +52,9 @@ public class TrendFragment extends Fragment {
         categories.add("Calories Burned");
         ArrayAdapter arrayAdapter1 = new ArrayAdapter(getContext(), R.layout.support_simple_spinner_dropdown_item, categories);
         category.setAdapter(arrayAdapter1);
-        //category.setSelection(0);
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //System.out.println("CATEGORY CHOSEN IS: " + i);
                 categoryInd = i;
                 populateGraph(FFTrackerHelper.queries[timeInd][categoryInd]);
             }
@@ -76,7 +74,6 @@ public class TrendFragment extends Fragment {
         timeSpan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //System.out.println("TIME SPAN CHOSEN IS: " + i);
                 timeInd = i;
                 populateGraph(FFTrackerHelper.queries[timeInd][categoryInd]);
             }
@@ -96,10 +93,12 @@ public class TrendFragment extends Fragment {
         c = storage.rawQuery(query, null);
         int timeIndex = c.getColumnIndex("time");
         int valueIndex = c.getColumnIndex("value");
-        c.moveToFirst();
-        while(c!=null && !c.isAfterLast()){
+        c.moveToLast();
+        //Start from smallest x values first, as required by MPAndroidChart
+        while(c!=null && !c.isBeforeFirst()){
             entries.add(new Entry(FFTrackerHelper.getMilliseconds(c.getString(timeIndex)), c.getInt(valueIndex)));
-            c.moveToNext();
+            //System.out.println("MILLISECONDS IS " + c.getString(timeIndex) + " " + FFTrackerHelper.getMilliseconds(c.getString(timeIndex)));
+            c.moveToPrevious();
         }
         if(entries.isEmpty()){
             display.clear();
@@ -108,6 +107,8 @@ public class TrendFragment extends Fragment {
             return;
         }
         LineDataSet lineDataSet = new LineDataSet(entries, "Weight");
+        lineDataSet.setColor(getResources().getColor(R.color.colorPrimary));
+        lineDataSet.setCircleColor(getResources().getColor(R.color.colorAccent));
         LineData lineData = new LineData(lineDataSet);
         XAxis xAxis = display.getXAxis();
         xAxis.setValueFormatter(new IAxisValueFormatter() {
@@ -126,7 +127,6 @@ public class TrendFragment extends Fragment {
         display.getLegend().setEnabled(false);
         display.setData(lineData);
         display.setDescription(null);
-        display.setBackgroundColor(Color.WHITE);
         display.setBorderColor(Color.RED);
         display.invalidate();
     }

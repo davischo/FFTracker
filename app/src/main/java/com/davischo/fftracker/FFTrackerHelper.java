@@ -24,30 +24,29 @@ public class FFTrackerHelper {
     static float WEIGHT_DEFAULT = 65.0f;  //in kg
     static int ACTIVITY_LEVEL_DEFAULT = 0;
     static int GOAL_DEFAULT = 0;
-    static String TIMESPAN_DEFAULT = " LIMIT 7";
     static String[][] queries = {
-            {"SELECT time, AVG(weight) AS value FROM weight GROUP BY time LIMIT 7",
-                    "SELECT time, SUM(calories) AS value FROM food GROUP BY time LIMIT 7",
-                    "SELECT time, SUM(calories) AS value FROM exercise GROUP BY time LIMIT 7"
+            {"SELECT time, AVG(weight) AS value FROM weight GROUP BY time ORDER BY time DESC LIMIT 7",
+                    "SELECT time, SUM(calories) AS value FROM food GROUP BY time ORDER BY time DESC LIMIT 7",
+                    "SELECT time, SUM(calories) AS value FROM exercise GROUP BY time ORDER BY time DESC LIMIT 7"
             },
-            {"SELECT time, AVG(weight) AS value FROM weight GROUP BY time LIMIT 30",
-                    "SELECT time, SUM(calories) AS value FROM food GROUP BY time LIMIT 30",
-                    "SELECT time, SUM(calories) AS value FROM exercise GROUP BY time LIMIT 30"
+            {"SELECT time, AVG(weight) AS value FROM weight GROUP BY time ORDER BY time DESC LIMIT 30",
+                    "SELECT time, SUM(calories) AS value FROM food GROUP BY time ORDER BY time DESC LIMIT 30",
+                    "SELECT time, SUM(calories) AS value FROM exercise GROUP BY time ORDER BY time DESC LIMIT 30"
             },
-            {"SELECT time, AVG(weight) AS value FROM weight GROUP BY time",
-                    "SELECT time, SUM(calories) AS value FROM food GROUP BY time",
-                    "SELECT time, SUM(calories) AS value FROM exercise GROUP BY time"
+            {"SELECT time, AVG(weight) AS value FROM weight GROUP BY time ORDER BY time DESC",
+                    "SELECT time, SUM(calories) AS value FROM food GROUP BY time ORDER BY time DESC",
+                    "SELECT time, SUM(calories) AS value FROM exercise GROUP BY time ORDER BY time DESC"
             }
     };
 
     public static String getCurrentDate(){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date();
         return format.format(date);
     }
 
     public static long getMilliseconds(String myDate){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Date date = null;
         long millis = 0;
         try {
@@ -121,6 +120,9 @@ public class FFTrackerHelper {
     public static String getLocalGender(){
         return sharedPreferences.getString("gender", GENDER_DEFAULT);
     }
+    public static String getLocalName(){
+        return sharedPreferences.getString("name", "");
+    }
     public static int getLocalDOBYear() {
         return sharedPreferences.getInt("dobYear", YEAR_DEFAULT);
     }
@@ -142,11 +144,5 @@ public class FFTrackerHelper {
     public static int getLocalGoal() {
         return sharedPreferences.getInt("goal", GOAL_DEFAULT);
     }
-    public static String getLocalTimeSpan() {
-        return sharedPreferences.getString("timeSpan", TIMESPAN_DEFAULT);
-    }
-//    public static String getCategory() {
-//        return sharedPreferences.getString("category", " weight");
-//    }
 
 }
