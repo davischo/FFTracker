@@ -14,14 +14,12 @@
             android:text="Profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textAlignment="center"
-            android:textStyle="normal|bold"
-            android:textColor="@android:color/black"
-            android:fontFamily="sans-serif"
             android:layout_weight=".5"
-            android:background="@color/colorPrimaryDark"
-            android:backgroundTint="@color/colorPrimary" />
+            android:background="@color/colorPrimary"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title.Inverse"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:fontFamily="sans-serif-smallcaps" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -123,7 +121,7 @@
                 android:id="@+id/activityLevelSpinner"
                 android:focusableInTouchMode="false"
                 android:textSize="14sp"
-                android:backgroundTint="@color/colorAccent" />
+                android:popupBackground="@color/backGroundPrimary"/>
             <Spinner
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,7 +130,7 @@
                 android:id="@+id/goalSpinner"
                 android:focusableInTouchMode="false"
                 android:textSize="14sp"
-                android:backgroundTint="@color/colorAccent"/>
+                android:popupBackground="@color/backGroundPrimary"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

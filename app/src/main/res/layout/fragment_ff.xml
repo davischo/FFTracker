@@ -10,12 +10,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/title"
-        android:textSize="30sp"
-        android:textAlignment="center"
         android:text="Food and Fitness"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/black"
-        android:background="@color/colorPrimary" />
+        android:background="@color/colorPrimary"
+        android:typeface="sans"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Title.Inverse"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:fontFamily="sans-serif-smallcaps" />
+        <!--android:fontFamily="sans-serif-smallcaps"-->
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,10 +51,13 @@
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:text="Food"
-                android:background="@color/colorPrimary"
-                android:gravity="center"/>
+                android:background="@color/lightPrimary"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                android:fontFamily="sans-serif-smallcaps" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,8 +71,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Exercise"
-                android:background="@color/colorPrimary"
-                android:gravity="center"/>
+                android:background="@color/lightPrimary"
+                android:gravity="center"
+                android:textAppearance="@android:style/TextAppearance.Small.Inverse"
+                android:fontFamily="sans-serif-smallcaps" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,7 +109,7 @@
         android:visibility="invisible"
         android:alpha="0"
         android:elevation="20dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/backGroundPrimary">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -185,7 +193,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/add_submit"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimary"
             android:onClick="submitClicked" />
     </LinearLayout>
 
